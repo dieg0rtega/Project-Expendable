@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "name": "New Actions",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "Player",

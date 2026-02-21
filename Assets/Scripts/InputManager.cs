@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static GameInput PlayerInput;
     void Start()
     {
         
