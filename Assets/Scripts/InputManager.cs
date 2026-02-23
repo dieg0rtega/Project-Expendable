@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static GameInput PlayerInput;
+    //public static GameInt PlayerInput;
     void Start()
     {
         
