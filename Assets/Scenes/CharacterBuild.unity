@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 1357000827}
   - component: {fileID: 1357000826}
   - component: {fileID: 1357000828}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   SnapInput: 1
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
@@ -459,6 +459,9 @@ MonoBehaviour:
   JumpEndEarlyGravityModifier: 3
   CoyoteTime: 0.15
   JumpBuffer: 0.2
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!61 &1357000826
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -544,6 +547,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 1357000825}
+  _drawJumpArc: 1
+  _arcResolution: 46
+  _arcTime: 2
+  _arcColor: {r: 0.016323686, g: 1, b: 0, a: 1}
 --- !u!1 &2108915585
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,7 +563,7 @@ GameObject:
   - component: {fileID: 2108915587}
   - component: {fileID: 2108915586}
   - component: {fileID: 2108915589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

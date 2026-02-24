@@ -17,6 +17,12 @@ public class NewBehaviourScript : MonoBehaviour
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
 
+    [Header("Jump Arc Visualization")]
+    [SerializeField] private bool _drawJumpArc = true;
+    [SerializeField] private int _arcResolution = 30;
+    [SerializeField] private float _arcTime = 2f;
+    [SerializeField] private Color _arcColor = Color.green;
+
 
     public Vector2 FrameInput => _frameInput.Move;
     public event Action<bool, float> GroundedChanged;
@@ -208,6 +214,76 @@ public class NewBehaviourScript : MonoBehaviour
         if (_stats == null) Debug.LogWarning("Please assign a ScriptableStats asset to the Player Controller's Stats slot", this);
     }
 #endif
+
+    private void OnDrawGizmos()
+    {
+        if (!_drawJumpArc || _stats == null)
+            return;
+
+        DrawJumpArc(1);
+    }
+
+    // The Visualization of the Jump Arc
+    private void DrawJumpArc(float direction)
+    {
+        Gizmos.color = _arcColor;
+
+        Vector2 startPosition;
+
+        if (Application.isPlaying && _col != null)
+        {
+            startPosition = _col.bounds.center;
+        }
+        else
+        {
+            startPosition = transform.position;
+        }
+
+        float horizontalSpeed = _stats.MaxSpeed * direction;
+        float verticalSpeed = _stats.JumpPower;
+
+        Vector2 velocity = new Vector2(horizontalSpeed, verticalSpeed);
+
+        float timeStep = _arcTime / _arcResolution;
+
+        Vector2 previousPoint = startPosition;
+
+        for (int i = 1; i <= _arcResolution; i++)
+        {
+            float t = i * timeStep;
+
+            // Use your gravity
+            float gravity = _stats.FallAcceleration;
+
+            Vector2 displacement = new Vector2(
+                velocity.x * t,
+                velocity.y * t - 0.5f * gravity * t * t
+            );
+
+            //Starts the Drawing at the ground
+            Vector2 point = startPosition + new Vector2(
+     horizontalSpeed * t,
+     verticalSpeed * t - 0.5f * _stats.FallAcceleration * t * t
+ );
+
+            // Use a GROUND layer mask here — not PlayerLayer
+            RaycastHit2D hit = Physics2D.Linecast(
+                previousPoint,
+                point,
+                _stats.GroundLayer   // <-- make sure this is your ground layer
+            );
+
+            if (hit.collider != null)
+            {
+                Gizmos.DrawLine(previousPoint, hit.point);
+                break;
+            }
+
+            Gizmos.DrawLine(previousPoint, point);
+            previousPoint = point;
+        }
+    }
+
 }
 
 public struct FrameInput
