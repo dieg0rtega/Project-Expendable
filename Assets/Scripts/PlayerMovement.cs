@@ -23,7 +23,13 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float _arcTime = 2f;
     [SerializeField] private Color _arcColor = Color.green;
 
-
+    [Header("Pickaxe Hook")]
+    [SerializeField] private float _hookRange = 1.5f;
+    [SerializeField] private float _hookBoost = 12f;
+    [SerializeField] private float _ledgeClearHeight = 0.6f;
+    [SerializeField] private float _hookCooldown = 0.5f;
+    private float _lastHookTime = float.MinValue;
+    private bool _isHooked;
     public Vector2 FrameInput => _frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
@@ -77,7 +83,7 @@ public class NewBehaviourScript : MonoBehaviour
             HandleJump();
             HandleDirection();
             HandleGravity();
-
+            HandlePickaxeHook();
             ApplyMovement();
         }
 
@@ -206,6 +212,54 @@ public class NewBehaviourScript : MonoBehaviour
 
     #endregion
 
+    #region Pickaxe Hook
+
+    private void HandlePickaxeHook()
+    {
+        if (Input.GetButtonDown("Fire1") && _time > _lastHookTime + _hookCooldown)
+            TryHook();
+
+        if (_isHooked && _frameVelocity.y < 0)
+            _isHooked = false;
+    }
+
+    private void TryHook()
+    {
+        Vector2[] dirs = { Vector2.right, Vector2.left };
+
+        foreach (var dir in dirs)
+        {
+            Vector2 origin = _col.bounds.center;
+            RaycastHit2D wallHit = Physics2D.Raycast(origin, dir, _hookRange, ~_stats.PlayerLayer);
+
+            if (wallHit.collider != null)
+            {
+                // Check for open space above the hit point (the ledge)
+                Vector2 ledgeCheckOrigin = wallHit.point + Vector2.up * _ledgeClearHeight;
+                RaycastHit2D ledgeCheck = Physics2D.Raycast(ledgeCheckOrigin, dir, 0.3f, ~_stats.PlayerLayer);
+
+                if (ledgeCheck.collider == null) // Open space = ledge exists
+                {
+                    ExecuteHook(dir);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void ExecuteHook(Vector2 wallDir)
+    {
+        _isHooked = true;
+        _lastHookTime = _time;
+
+ 
+        _frameVelocity.y = _hookBoost;
+        _frameVelocity.x = -wallDir.x * 3f;
+
+        _endedJumpEarly = false;
+    }
+
+    #endregion
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
 #if UNITY_EDITOR
