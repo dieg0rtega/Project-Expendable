@@ -12,7 +12,7 @@ public class NewBehaviourScript : MonoBehaviour
     // The CHaracter's Movement Intialzied Variables
     [SerializeField] private PlayerMovementStats _stats;
     private Rigidbody2D _rb;
-    private BoxCollider2D _col;
+    private CapsuleCollider2D _col;
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
@@ -28,8 +28,12 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float _hookBoost = 12f;
     [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
+
+    private bool _hookToConsume;
     private float _lastHookTime = float.MinValue;
     private bool _isHooked;
+    private float _hookDuration = 0.15f;
+    private float _hookEndTime;
     public Vector2 FrameInput => _frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
@@ -40,7 +44,7 @@ public class NewBehaviourScript : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _col = GetComponent<BoxCollider2D>();
+        _col = GetComponent<CapsuleCollider2D>();
 
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
@@ -61,7 +65,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-            Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+            Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
+            HookDown = Input.GetMouseButtonDown(0),
         };
 
         if (_stats.SnapInput)
@@ -75,6 +80,11 @@ public class NewBehaviourScript : MonoBehaviour
             _jumpToConsume = true;
             _timeJumpWasPressed = _time;
         }
+
+        if (_frameInput.HookDown) {
+            _hookToConsume = true;
+        }
+           
     }
         private void FixedUpdate()
         {
@@ -198,6 +208,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void HandleGravity()
     {
+        if (_isHooked) return;
+
         if (_grounded && _frameVelocity.y <= 0f)
         {
             _frameVelocity.y = _stats.GroundingForce;
@@ -216,11 +228,17 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void HandlePickaxeHook()
     {
-        if (Input.GetButtonDown("Fire1") && _time > _lastHookTime + _hookCooldown)
+        if (_hookToConsume && _time > _lastHookTime + _hookCooldown)
+        {
             TryHook();
+            _hookToConsume = false;
+        }
 
-        if (_isHooked && _frameVelocity.y < 0)
+        if (_isHooked && (_time >= _hookEndTime || _frameVelocity.y < 0))
+        {
             _isHooked = false;
+            _endedJumpEarly = false;
+        }
     }
 
     private void TryHook()
@@ -230,32 +248,38 @@ public class NewBehaviourScript : MonoBehaviour
         foreach (var dir in dirs)
         {
             Vector2 origin = _col.bounds.center;
-            RaycastHit2D wallHit = Physics2D.Raycast(origin, dir, _hookRange, ~_stats.PlayerLayer);
+            LayerMask hookMask = ~(1 << gameObject.layer);
+
+            RaycastHit2D wallHit = Physics2D.Raycast(origin, dir, _hookRange, hookMask);
+
+            Debug.Log($"Raycast {dir}: {(wallHit.collider != null ? wallHit.collider.name + " on layer " + wallHit.collider.gameObject.layer : "nothing hit")}");
 
             if (wallHit.collider != null)
             {
                 // Check for open space above the hit point (the ledge)
                 Vector2 ledgeCheckOrigin = wallHit.point + Vector2.up * _ledgeClearHeight;
-                RaycastHit2D ledgeCheck = Physics2D.Raycast(ledgeCheckOrigin, dir, 0.3f, ~_stats.PlayerLayer);
+                RaycastHit2D ledgeCheck = Physics2D.Raycast(ledgeCheckOrigin, dir, 0.3f, hookMask);
+
+                Debug.Log($"Ledge check: {(ledgeCheck.collider == null ? "CLEAR - should hook!" : "blocked by " + ledgeCheck.collider.name)}");
 
                 if (ledgeCheck.collider == null) // Open space = ledge exists
                 {
                     ExecuteHook(dir);
+                    Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
                     return;
                 }
             }
         }
+        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
     }
 
     private void ExecuteHook(Vector2 wallDir)
     {
         _isHooked = true;
         _lastHookTime = _time;
-
- 
+        _hookEndTime = _time + _hookDuration;
         _frameVelocity.y = _hookBoost;
         _frameVelocity.x = -wallDir.x * 3f;
-
         _endedJumpEarly = false;
     }
 
@@ -345,6 +369,7 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public Vector2 Move;
+    public bool HookDown;
 }
 
 public interface IPlayerController
