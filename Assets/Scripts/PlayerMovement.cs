@@ -261,7 +261,13 @@ public class NewBehaviourScript : MonoBehaviour
               
         }
     }
+    
+    private bool IsAtLedge()
+    {
+        Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.05f);
+        
 
+    }
     private bool IsNextToWall()
     {
         LayerMask hookMask = ~(1 << gameObject.layer);
