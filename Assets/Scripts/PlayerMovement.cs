@@ -105,18 +105,20 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 boxCenter = _col.bounds.center;
         Vector2 boxSize = _col.bounds.size;
 
-        bool groundHit = Physics2D.BoxCast(
-            boxCenter,
-            boxSize,
+        bool groundHit = Physics2D.CapsuleCast(
+           _col.bounds.center,
+            _col.bounds.size,
+            _col.direction,
             0f,
             Vector2.down,
             _stats.GrounderDistance,
             ~_stats.PlayerLayer
         );
 
-        bool ceilingHit = Physics2D.BoxCast(
-            boxCenter,
-            boxSize,
+        bool ceilingHit = Physics2D.CapsuleCast(
+        _col.bounds.center,
+        _col.bounds.size,
+        _col.direction,
             0f,
             Vector2.up,
             _stats.GrounderDistance,
@@ -144,6 +146,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+        Debug.Log("Grounded: " + groundHit);
     }
 
 
