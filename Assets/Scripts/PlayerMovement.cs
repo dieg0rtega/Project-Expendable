@@ -12,7 +12,7 @@ public class NewBehaviourScript : MonoBehaviour
     // The CHaracter's Movement Intialzied Variables
     [SerializeField] private PlayerMovementStats _stats;
     private Rigidbody2D _rb;
-    private BoxCollider2D _col;
+    private CapsuleCollider2D _col;
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
@@ -34,7 +34,7 @@ public class NewBehaviourScript : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _col = GetComponent<BoxCollider2D>();
+        _col = GetComponent<CapsuleCollider2D>();
 
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
@@ -93,18 +93,20 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 boxCenter = _col.bounds.center;
         Vector2 boxSize = _col.bounds.size;
 
-        bool groundHit = Physics2D.BoxCast(
-            boxCenter,
-            boxSize,
+        bool groundHit = Physics2D.CapsuleCast(
+           _col.bounds.center,
+            _col.bounds.size,
+            _col.direction,
             0f,
             Vector2.down,
             _stats.GrounderDistance,
             ~_stats.PlayerLayer
         );
 
-        bool ceilingHit = Physics2D.BoxCast(
-            boxCenter,
-            boxSize,
+        bool ceilingHit = Physics2D.CapsuleCast(
+        _col.bounds.center,
+        _col.bounds.size,
+        _col.direction,
             0f,
             Vector2.up,
             _stats.GrounderDistance,
@@ -132,6 +134,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+        Debug.Log("Grounded: " + groundHit);
     }
 
 
