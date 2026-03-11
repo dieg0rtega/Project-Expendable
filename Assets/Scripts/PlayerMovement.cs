@@ -449,7 +449,7 @@ public class NewBehaviourScript : MonoBehaviour
      verticalSpeed * t - 0.5f * _stats.FallAcceleration * t * t
  );
 
-            // Use a GROUND layer mask here — not PlayerLayer
+            // Use a GROUND layer mask here ï¿½ not PlayerLayer
             RaycastHit2D hit = Physics2D.Linecast(
                 previousPoint,
                 point,
