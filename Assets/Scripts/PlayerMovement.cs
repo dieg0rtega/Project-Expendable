@@ -23,7 +23,21 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float _arcTime = 2f;
     [SerializeField] private Color _arcColor = Color.green;
 
+    [Header("Pickaxe Hook")]
+    [SerializeField] private float _hookRange = 1.5f;
+    [SerializeField] private float _hookBoost = 12f;
+    [SerializeField] private float _ledgeClearHeight = 0.6f;
+    [SerializeField] private float _hookCooldown = 0.5f;
+    [SerializeField] private float _snapSpeed = 15f;
 
+    private Vector2 _hookSnapTarget;
+    private bool _isSnapping;
+    private bool _isLedgeBoosting;
+
+    private float _lastHookTime = float.MinValue;
+    private bool _isHooked;
+    private float _hookDuration = 3f;
+    private float _hookEndTime;
     public Vector2 FrameInput => _frameInput.Move;
     public event Action<bool, float> GroundedChanged;
     public event Action Jumped;
@@ -55,7 +69,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
-            Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"))
+            Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
+            HookDown = Input.GetMouseButton(0),
         };
 
         if (_stats.SnapInput)
@@ -69,15 +84,16 @@ public class NewBehaviourScript : MonoBehaviour
             _jumpToConsume = true;
             _timeJumpWasPressed = _time;
         }
+           
     }
         private void FixedUpdate()
         {
             CheckCollisions();
 
-            HandleJump();
             HandleDirection();
             HandleGravity();
-
+            HandlePickaxeHook();
+            HandleJump();
             ApplyMovement();
         }
 
@@ -178,6 +194,8 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void HandleDirection()
     {
+        if (_isHooked) return;
+
         if (_frameInput.Move.x == 0)
         {
             var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
@@ -195,6 +213,9 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void HandleGravity()
     {
+        if (_isHooked) return;
+
+
         if (_grounded && _frameVelocity.y <= 0f)
         {
             _frameVelocity.y = _stats.GroundingForce;
@@ -209,6 +230,165 @@ public class NewBehaviourScript : MonoBehaviour
 
     #endregion
 
+    #region Pickaxe Hook
+
+    private void HandlePickaxeHook()
+    {
+        if (_frameInput.HookDown && !_isHooked && _time > _lastHookTime + _hookCooldown)
+        {
+            TryHook();
+        }
+
+        if (!_frameInput.HookDown)
+        {
+            _isHooked = false;
+        }
+
+        if (_isHooked)
+        {
+            if (IsAtLedge(out Vector2 ledgeDir) && _frameVelocity.y > 0 && _frameInput.Move.y > 0 && !_isLedgeBoosting)
+            {
+                _isLedgeBoosting = true;
+                _frameVelocity.y = _stats.JumpPower * 0.6f;
+                _frameVelocity.x = ledgeDir.x * _stats.MaxSpeed;
+            }
+
+            if (_isLedgeBoosting)
+            {
+                if (!IsNextToWall(out _, out _))
+                {
+                    _isHooked = false;
+                    _isLedgeBoosting = false;
+                }
+                return;
+            }
+
+            if (_isSnapping)
+            {
+                Vector2 newPos = Vector2.MoveTowards(transform.position, _hookSnapTarget, _snapSpeed * Time.fixedDeltaTime);
+                _rb.MovePosition(newPos);
+
+               
+                if (Vector2.Distance(transform.position, _hookSnapTarget) < 0.01f)
+                    _isSnapping = false;
+
+                return; 
+            }
+
+            if (!IsNextToWall(out _, out _))
+            {
+                _isHooked = false;
+                return;
+            }
+            _frameVelocity.x = 0f;
+            _frameVelocity.y = _frameInput.Move.y * (_stats.MaxSpeed * 0.7f);
+
+            if (_frameInput.JumpDown || _jumpToConsume)
+            {
+                _isHooked = false;
+                _frameVelocity.y = _stats.JumpPower * 2;
+                _jumpToConsume = true;
+                return;
+            }
+
+            // Release after max duration
+            if (_time >= _hookEndTime)
+                _isHooked = false;
+                _lastHookTime = _time;
+              
+        }
+    }
+
+    private bool IsAtLedge(out Vector2 wallDir)
+     {   
+        LayerMask hookMask = ~(1 << gameObject.layer);
+        Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
+        RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
+        RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
+
+        Vector2 top = new Vector2(_col.bounds.center.x, _col.bounds.max.y + 0.05f);
+        RaycastHit2D topRight = Physics2D.Raycast(top, Vector2.right, _hookRange, hookMask);
+        RaycastHit2D topLeft = Physics2D.Raycast(top, Vector2.left, _hookRange, hookMask);
+
+        if (bottomRight.collider != null && topRight.collider == null)
+        {
+            wallDir = Vector2.right;
+            return true;
+        }
+        if (bottomLeft.collider != null && topLeft.collider == null)
+        {
+            wallDir = Vector2.left;
+            return true;
+        }
+
+        wallDir = default;
+        return false;
+
+    }
+
+    private bool IsNextToWall(out RaycastHit2D hit, out Vector2 wallDir)
+    {
+        LayerMask hookMask = ~(1 << gameObject.layer); //Temp until I fix the layering issue
+        Vector2 center = _col.bounds.center;
+        Vector2 bottom = new Vector2(center.x, _col.bounds.min.y + 0.3f);
+        Vector2 top = new Vector2(center.x, _col.bounds.max.y - 0.1f);
+
+        Vector2[] origins = { bottom, center, top };
+        foreach (var origin in origins)
+        {
+            RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, _hookRange, hookMask);
+            RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, _hookRange, hookMask);
+
+            if (rightHit.collider != null) { 
+                hit = rightHit; wallDir = Vector2.right; return true;
+            }
+            if (leftHit.collider != null) { 
+                hit = leftHit; wallDir = Vector2.left; return true;
+            }
+        }
+
+        hit = default;
+        wallDir = default;
+        return false;
+    }
+
+    private void SnapToWall(RaycastHit2D wallHit, Vector2 dir)
+    {
+        
+        float capsuleHalfWidth = _col.bounds.extents.x;
+
+        float snappedX = wallHit.point.x - (dir.x * capsuleHalfWidth);
+
+        if (Mathf.Abs(transform.position.x - snappedX) > 0.05f) {
+            _hookSnapTarget = new Vector2(snappedX, transform.position.y);
+            _isSnapping = true;
+            _frameVelocity.x = 0f;
+            _rb.velocity = Vector2.zero;
+        }
+        _frameVelocity.x = 0f;
+    }
+    private void TryHook()
+    {
+            
+            if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
+            {
+                SnapToWall(wallHit, wallDir);
+                _isHooked = true;
+                _lastHookTime = _time;
+                _hookEndTime = _time + _hookDuration;
+                _frameVelocity = Vector2.zero;
+
+                if (_grounded)
+                {   
+                    _frameVelocity.y = _stats.JumpPower * 0.3f;
+                }
+            }
+        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+    }
+
+
+
+    #endregion
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
 #if UNITY_EDITOR
@@ -294,6 +474,7 @@ public struct FrameInput
     public bool JumpDown;
     public bool JumpHeld;
     public Vector2 Move;
+    public bool HookDown;
 }
 
 public interface IPlayerController
