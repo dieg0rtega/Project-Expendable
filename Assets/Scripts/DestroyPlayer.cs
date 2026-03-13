@@ -21,7 +21,8 @@ public class DestroyPlayer : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Player Hit");
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject, 3f);
         }
     }
 }
