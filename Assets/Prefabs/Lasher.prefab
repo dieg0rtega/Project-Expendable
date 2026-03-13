@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 6725317374274236818}
   - component: {fileID: 8678751386319506505}
   - component: {fileID: 6996242511150221953}
-  - component: {fileID: 4802324136018107575}
-  - component: {fileID: 2938252383860878992}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -132,30 +130,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4802324136018107575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5325155919033966471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5fdb5d90a026cc48b14bced04d7decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2938252383860878992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5325155919033966471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4473db1de57b3419923fd495240605, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8862331499676729657
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +141,6 @@ GameObject:
   - component: {fileID: 6618408902807760998}
   - component: {fileID: 6796709340281857176}
   - component: {fileID: 8944748098883755619}
-  - component: {fileID: 7445157688262794158}
   m_Layer: 0
   m_Name: Lasher
   m_TagString: Untagged
@@ -278,15 +251,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7445157688262794158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8862331499676729657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5fdb5d90a026cc48b14bced04d7decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
