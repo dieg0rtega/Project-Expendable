@@ -3088,6 +3088,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lasher (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8862331499676729657, guid: 892d4345d1d5dfd4888a21af2c37e81b, type: 3}
+      propertyPath: m_TagString
+      value: Hazard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3313,6 +3317,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lasher (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8862331499676729657, guid: 892d4345d1d5dfd4888a21af2c37e81b, type: 3}
+      propertyPath: m_TagString
+      value: Hazard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3460,8 +3468,9 @@ GameObject:
   - component: {fileID: 1357000822}
   - component: {fileID: 1357000825}
   - component: {fileID: 1357000827}
-  - component: {fileID: 1357000826}
   - component: {fileID: 1357000828}
+  - component: {fileID: 1357000829}
+  - component: {fileID: 1357000830}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3570,51 +3579,6 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 0
---- !u!61 &1357000826
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357000821}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
 --- !u!50 &1357000827
 Rigidbody2D:
   serializedVersion: 4
@@ -3655,10 +3619,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 1357000825}
+  _hookMask:
+    serializedVersion: 2
+    m_Bits: 0
   _drawJumpArc: 1
   _arcResolution: 30
   _arcTime: 2
   _arcColor: {r: 0, g: 1, b: 0, a: 1}
+  _hookRange: 1.5
+  _hookBoost: 12
+  _ledgeClearHeight: 0.6
+  _hookCooldown: 0.5
+  _snapSpeed: 15
+--- !u!70 &1357000829
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357000821}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
+--- !u!114 &1357000830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357000821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3fc79b02809014e98d31a5cb85a8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnPoint: {x: 0, y: 0}
+  _respawnDelay: 1
 --- !u!1001 &1432031751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5450,6 +5471,10 @@ PrefabInstance:
     - target: {fileID: 1212795469779742674, guid: 11caa4a387d54ce469ae3899d3d3f067, type: 3}
       propertyPath: m_Name
       value: IcePool
+      objectReference: {fileID: 0}
+    - target: {fileID: 1212795469779742674, guid: 11caa4a387d54ce469ae3899d3d3f067, type: 3}
+      propertyPath: m_TagString
+      value: Hazard
       objectReference: {fileID: 0}
     - target: {fileID: 5005231850231439957, guid: 11caa4a387d54ce469ae3899d3d3f067, type: 3}
       propertyPath: m_LocalScale.x

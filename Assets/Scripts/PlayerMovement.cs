@@ -16,6 +16,7 @@ public class NewBehaviourScript : MonoBehaviour
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
+    [SerializeField] private LayerMask _hookMask;
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -33,6 +34,7 @@ public class NewBehaviourScript : MonoBehaviour
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
     private bool _isLedgeBoosting;
+    private Vector2 _hookedWallDir;
 
     private float _lastHookTime = float.MinValue;
     private bool _isHooked;
@@ -286,8 +288,13 @@ public class NewBehaviourScript : MonoBehaviour
             if (_frameInput.JumpDown || _jumpToConsume)
             {
                 _isHooked = false;
-                _frameVelocity.y = _stats.JumpPower * 2;
-                _jumpToConsume = true;
+                _isLedgeBoosting = false;
+                _isSnapping = false;
+                float pushDir = -_hookedWallDir.x; // opposite direction of wall
+                _frameVelocity.x = pushDir * _stats.MaxSpeed * 1.5f;
+                _frameVelocity.y = _stats.JumpPower * 0.75f;
+
+                _jumpToConsume = false;
                 return;
             }
 
@@ -300,8 +307,8 @@ public class NewBehaviourScript : MonoBehaviour
     }
 
     private bool IsAtLedge(out Vector2 wallDir)
-     {   
-        LayerMask hookMask = ~(1 << gameObject.layer);
+     {
+        LayerMask hookMask = _hookMask;
         Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
         RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
         RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
@@ -328,7 +335,7 @@ public class NewBehaviourScript : MonoBehaviour
 
     private bool IsNextToWall(out RaycastHit2D hit, out Vector2 wallDir)
     {
-        LayerMask hookMask = ~(1 << gameObject.layer); //Temp until I fix the layering issue
+        LayerMask hookMask = _hookMask;
         Vector2 center = _col.bounds.center;
         Vector2 bottom = new Vector2(center.x, _col.bounds.min.y + 0.3f);
         Vector2 top = new Vector2(center.x, _col.bounds.max.y - 0.1f);
@@ -336,7 +343,11 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2[] origins = { bottom, center, top };
         foreach (var origin in origins)
         {
+            Debug.DrawRay(origin, Vector2.right * _hookRange, Color.red, 1f);
+            Debug.DrawRay(origin, Vector2.left * _hookRange, Color.red, 1f);
+
             RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, _hookRange, hookMask);
+            Debug.Log($"Right hit: {rightHit.collider?.name ?? "null"} | layer: {rightHit.collider?.gameObject.layer}");
             RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, _hookRange, hookMask);
 
             if (rightHit.collider != null) { 
@@ -372,6 +383,7 @@ public class NewBehaviourScript : MonoBehaviour
             
             if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
             {
+                _hookedWallDir = wallDir;
                 SnapToWall(wallHit, wallDir);
                 _isHooked = true;
                 _lastHookTime = _time;
@@ -380,10 +392,15 @@ public class NewBehaviourScript : MonoBehaviour
 
                 if (_grounded)
                 {   
+
                     _frameVelocity.y = _stats.JumpPower * 0.3f;
                 }
             }
-        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+            else
+            {
+                Debug.Log("No wall detected");
+            }
+            Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
     }
 
 

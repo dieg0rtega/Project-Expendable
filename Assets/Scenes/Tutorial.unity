@@ -1677,7 +1677,7 @@ GameObject:
   - component: {fileID: 1069544873}
   - component: {fileID: 1069544872}
   - component: {fileID: 1069544871}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,9 +1810,9 @@ GameObject:
   - component: {fileID: 1109001621}
   - component: {fileID: 1109001620}
   - component: {fileID: 1109001619}
-  - component: {fileID: 1109001616}
   - component: {fileID: 1109001623}
   - component: {fileID: 1109001622}
+  - component: {fileID: 1109001624}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1820,51 +1820,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1109001616
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109001615}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
 --- !u!50 &1109001619
 Rigidbody2D:
   serializedVersion: 4
@@ -1968,7 +1923,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1109001615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096d7d04dda2d0a4a9055d547e0936c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 12a8d5291e1db454e938d495077263e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerLayer:
@@ -1989,6 +1944,9 @@ MonoBehaviour:
   JumpEndEarlyGravityModifier: 3
   CoyoteTime: 0.15
   JumpBuffer: 0.2
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &1109001623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,10 +1956,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 1109001615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53179b0b7f040024b89614e9b0216021, type: 3}
+  m_Script: {fileID: 11500000, guid: 3566de341cdc535438d7e1e41507d978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 1109001622}
+  _hookMask:
+    serializedVersion: 2
+    m_Bits: 8
+  _drawJumpArc: 1
+  _arcResolution: 30
+  _arcTime: 2
+  _arcColor: {r: 0, g: 1, b: 0, a: 1}
+  _hookRange: 1.5
+  _hookBoost: 12
+  _ledgeClearHeight: 0.6
+  _hookCooldown: 0.5
+  _snapSpeed: 15
+--- !u!70 &1109001624
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109001615}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &1206392844
 GameObject:
   m_ObjectHideFlags: 0
@@ -2881,7 +2886,7 @@ GameObject:
   - component: {fileID: 2037460159}
   - component: {fileID: 2037460158}
   - component: {fileID: 2037460157}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hexagon Flat-Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}

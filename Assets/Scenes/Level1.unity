@@ -966,6 +966,7 @@ GameObject:
   - component: {fileID: 368027615}
   - component: {fileID: 368027614}
   - component: {fileID: 368027616}
+  - component: {fileID: 368027617}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1081,7 +1082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   SnapInput: 1
   VerticalDeadZoneThreshold: 0.3
   HorizontalDeadZoneThreshold: 0.1
@@ -1099,7 +1100,7 @@ MonoBehaviour:
   JumpBuffer: 0.2
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &368027615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,6 +1114,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 368027614}
+  _hookMask:
+    serializedVersion: 2
+    m_Bits: 8
   _drawJumpArc: 1
   _arcResolution: 30
   _arcTime: 2
@@ -1122,8 +1126,8 @@ MonoBehaviour:
   _ledgeClearHeight: 0.6
   _hookCooldown: 0.5
   _snapSpeed: 15
---- !u!61 &368027616
-BoxCollider2D:
+--- !u!70 &368027616
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1155,18 +1159,22 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
   m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
+  m_Direction: 0
+--- !u!114 &368027617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368027608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3fc79b02809014e98d31a5cb85a8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnPoint: {x: 0, y: 0}
+  _respawnDelay: 1
 --- !u!1 &467180351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1957,7 +1965,7 @@ GameObject:
   - component: {fileID: 1072680256}
   - component: {fileID: 1072680258}
   - component: {fileID: 1072680257}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2497,7 +2505,7 @@ GameObject:
   - component: {fileID: 1316315596}
   - component: {fileID: 1316315599}
   - component: {fileID: 1316315598}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
