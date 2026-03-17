@@ -6,14 +6,13 @@ public class MainMenu : MonoBehaviour
 {
    public GameObject mainMenuPanel;
    public GameObject optionsMenuPanel;
+   public GameObject messagePanel; 
 
    public Toggle fullscreenToggle;
 
-  
-
    public void Play()
    {
-    SceneManager.LoadScene("Game");
+    SceneManager.LoadScene("Level1");
    }
 
    public void OpenOptions()
@@ -33,6 +32,20 @@ public class MainMenu : MonoBehaviour
    public void ToggleFullscreen(bool isFullscreen)
    {
       Screen.fullScreen = isFullscreen;
+   }
+
+   public void ToggleMessage()
+   {
+      if (messagePanel != null)
+      {
+      messagePanel.SetActive(!messagePanel.activeSelf);
+      }
+   }
+
+   public void CloseCredits()
+   {
+      messagePanel.SetActive(false);
+      mainMenuPanel.SetActive(true);
    }
 
 
