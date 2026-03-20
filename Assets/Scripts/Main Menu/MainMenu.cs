@@ -52,6 +52,22 @@ public class MainMenu : MonoBehaviour
    // write code for button to open guide 
    // code for button closing the guide 
 
+   public void OpenGuide()
+   {
+      mainMenuPanel.SetActive(false);
+      optionsMenuPanel.SetActive(false);
+      guidePanel.SetActive(true);
+      fullscreenToggle.isOn = Screen.fullScreen;
+   }
+
+   public void CloseGuide()
+   {
+      guidePanel.SetActive(false);
+      optionsMenuPanel.SetActive(true);
+      mainMenuPanel.SetActive(true);
+
+   }
+
 
 
  
