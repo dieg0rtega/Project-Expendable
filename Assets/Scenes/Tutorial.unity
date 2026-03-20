@@ -1968,7 +1968,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1109001615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096d7d04dda2d0a4a9055d547e0936c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 12a8d5291e1db454e938d495077263e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerLayer:
@@ -1989,6 +1989,9 @@ MonoBehaviour:
   JumpEndEarlyGravityModifier: 3
   CoyoteTime: 0.15
   JumpBuffer: 0.2
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &1109001623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,10 +2001,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1109001615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53179b0b7f040024b89614e9b0216021, type: 3}
+  m_Script: {fileID: 11500000, guid: 3566de341cdc535438d7e1e41507d978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 1109001622}
+  _drawJumpArc: 1
+  _arcResolution: 30
+  _arcTime: 2
+  _arcColor: {r: 0, g: 1, b: 0, a: 1}
+  _hookRange: 1.5
+  _hookBoost: 12
+  _ledgeClearHeight: 0.6
+  _hookCooldown: 0.5
+  _snapSpeed: 15
 --- !u!1 &1206392844
 GameObject:
   m_ObjectHideFlags: 0
