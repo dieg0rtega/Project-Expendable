@@ -7,12 +7,13 @@ public class MainMenu : MonoBehaviour
    public GameObject mainMenuPanel;
    public GameObject optionsMenuPanel;
    public GameObject messagePanel; 
+   public GameObject guidePanel;
 
    public Toggle fullscreenToggle;
 
    public void Play()
    {
-    SceneManager.LoadScene("Level1");
+    SceneManager.LoadScene(1);
    }
 
    public void OpenOptions()
@@ -48,6 +49,12 @@ public class MainMenu : MonoBehaviour
       mainMenuPanel.SetActive(true);
    }
 
+   // write code for button to open guide 
+   // code for button closing the guide 
+
+
+
+ 
 
    public void Exit()
    {
