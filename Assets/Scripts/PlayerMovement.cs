@@ -16,6 +16,7 @@ public class NewBehaviourScript : MonoBehaviour
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
+    private bool _isOnIce;
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -29,6 +30,9 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
+
+
+
 
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
@@ -109,7 +113,8 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 boxCenter = _col.bounds.center;
         Vector2 boxSize = _col.bounds.size;
 
-        bool groundHit = Physics2D.CapsuleCast(
+        //Olivier Changed This
+        RaycastHit2D groundHit = Physics2D.CapsuleCast(
            _col.bounds.center,
             _col.bounds.size,
             _col.direction,
@@ -118,6 +123,21 @@ public class NewBehaviourScript : MonoBehaviour
             _stats.GrounderDistance,
             ~_stats.PlayerLayer
         );
+
+        _isOnIce = false;
+        bool isGroundHit = groundHit.collider != null;
+
+        
+
+        if(groundHit)
+        {
+            if(groundHit.collider.CompareTag("Slippery Ice"))
+            {
+                _isOnIce = true;
+            }
+        }
+
+
 
         bool ceilingHit = Physics2D.CapsuleCast(
         _col.bounds.center,
@@ -151,6 +171,12 @@ public class NewBehaviourScript : MonoBehaviour
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
         Debug.Log("Grounded: " + groundHit);
+
+
+        
+
+    
+
     }
 
 
@@ -192,18 +218,43 @@ public class NewBehaviourScript : MonoBehaviour
 
     #region Horizontal
 
+    //Olivier Changed This
     private void HandleDirection()
     {
         if (_isHooked) return;
 
+        float acceleration = _stats.Acceleration;
+        float deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
+
+        if (_isOnIce)
+        {
+            acceleration *= _stats.IceAccelerationMultiplier;
+            deceleration *= _stats.IceDecelerationMultiplier;
+
+            // harder to turn on ice
+            if (Mathf.Sign(_frameInput.Move.x) != Mathf.Sign(_frameVelocity.x) && _frameInput.Move.x != 0)
+            {
+                acceleration *= _stats.IceTurnControl;
+            }
+        }
+
         if (_frameInput.Move.x == 0)
         {
-            var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+            _frameVelocity.x = Mathf.MoveTowards(
+                _frameVelocity.x,
+                0,
+                deceleration * Time.fixedDeltaTime
+            );
         }
         else
         {
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+            float targetSpeed = _frameInput.Move.x * _stats.MaxSpeed;
+
+            _frameVelocity.x = Mathf.MoveTowards(
+                _frameVelocity.x,
+                targetSpeed,
+                acceleration * Time.fixedDeltaTime
+            );
         }
     }
 

@@ -16,7 +16,7 @@ public class PlayerMovementStats : MonoBehaviour
     [Tooltip("Minimum input required before you mount a ladder or climb a ledge. Avoids unwanted climbing using controllers"), Range(0.01f, 0.99f)]
     public float VerticalDeadZoneThreshold = 0.3f;
 
-    [Tooltip("Minimum input required before a left or right is recognized. Avoids drifting with sticky controllers"), Range(0.01f, 0.99f)]
+    [Tooltip("Minimum input required before a left   or right is recognized. Avoids drifting with sticky controllers"), Range(0.01f, 0.99f)]
     public float HorizontalDeadZoneThreshold = 0.1f;
 
     [Header("MOVEMENT")]
@@ -59,5 +59,15 @@ public class PlayerMovementStats : MonoBehaviour
 
     [Tooltip("Set this to what counts as ground")]
     public LayerMask GroundLayer;
+
+
+    //Olivier Changed This
+    [Header("Ice Movement")]
+    [Tooltip("Multiplier for acceleration while on ice")]
+    public float IceAccelerationMultiplier = 0.2f;
+    [Tooltip("Multiplier for deceleration while on ice")]
+    public float IceDecelerationMultiplier = 0.2f;
+    [Tooltip("How much control you have when trying to turn on ice")]
+    public float IceTurnControl = 0.3f;
 
 }
