@@ -5234,13 +5234,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1530231810}
   - component: {fileID: 1530231809}
-  - component: {fileID: 1530231808}
-  - component: {fileID: 1530231812}
   - component: {fileID: 1530231811}
+  - component: {fileID: 1530231812}
   - component: {fileID: 1530231813}
+  - component: {fileID: 1530231808}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5277,7 +5277,7 @@ MonoBehaviour:
   JumpBuffer: 0.2
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 8
   IceAccelerationMultiplier: 0.2
   IceDecelerationMultiplier: 0.2
   IceTurnControl: 0.3
@@ -5423,6 +5423,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stats: {fileID: 1530231808}
+  _hookMask:
+    serializedVersion: 2
+    m_Bits: 8
   _drawJumpArc: 1
   _arcResolution: 30
   _arcTime: 2
