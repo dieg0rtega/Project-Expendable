@@ -5396,6 +5396,7 @@ GameObject:
   - component: {fileID: 1530231812}
   - component: {fileID: 1530231813}
   - component: {fileID: 1530231808}
+  - component: {fileID: 1530231814}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -5593,6 +5594,20 @@ MonoBehaviour:
   _ledgeClearHeight: 0.6
   _hookCooldown: 0.5
   _snapSpeed: 15
+--- !u!114 &1530231814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530231807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3fc79b02809014e98d31a5cb85a8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnPoint: {x: 0, y: 0}
+  _respawnDelay: 1
 --- !u!1001 &1553039566
 PrefabInstance:
   m_ObjectHideFlags: 0

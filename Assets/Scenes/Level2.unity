@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 238310176}
   - component: {fileID: 238310175}
   - component: {fileID: 238310177}
+  - component: {fileID: 238310178}
   m_Layer: 0
   m_Name: Hidden1
   m_TagString: Untagged
@@ -468,6 +469,21 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &238310178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238310172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cde4d3cb55680c43bef66c309e0b125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShapeRenderer: {fileID: 0}
+  duration: 1
+  targetAlpha: 0.3
 --- !u!1001 &269132793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1557,7 +1573,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -2930,6 +2946,7 @@ GameObject:
   - component: {fileID: 1357000829}
   - component: {fileID: 1357000828}
   - component: {fileID: 1357000825}
+  - component: {fileID: 1357000830}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -3001,8 +3018,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2108915588}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1357000825
@@ -3128,6 +3144,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!114 &1357000830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357000821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3fc79b02809014e98d31a5cb85a8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnPoint: {x: 0, y: 0}
+  _respawnDelay: 1
 --- !u!1001 &1432031751
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3238,6 +3268,7 @@ GameObject:
   - component: {fileID: 1670394376}
   - component: {fileID: 1670394375}
   - component: {fileID: 1670394374}
+  - component: {fileID: 1670394377}
   m_Layer: 0
   m_Name: Hidden2
   m_TagString: Untagged
@@ -3451,6 +3482,21 @@ SpriteShapeRenderer:
     m_Center: {x: -0.5, y: -4.5000005, z: 0}
     m_Extent: {x: 2.0000002, y: 6.5000005, z: 0}
   m_SpriteSortPoint: 0
+--- !u!114 &1670394377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1670394372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cde4d3cb55680c43bef66c309e0b125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShapeRenderer: {fileID: 0}
+  duration: 1
+  targetAlpha: 0.3
 --- !u!4 &1683041221 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5005231850231439957, guid: 11caa4a387d54ce469ae3899d3d3f067, type: 3}
@@ -4557,6 +4603,7 @@ GameObject:
   - component: {fileID: 2108915587}
   - component: {fileID: 2108915586}
   - component: {fileID: 2108915589}
+  - component: {fileID: 2108915590}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4636,7 +4683,7 @@ Transform:
   m_LocalScale: {x: 0.9811, y: 0.9479, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1357000823}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2108915589
 MonoBehaviour:
@@ -4682,6 +4729,22 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &2108915590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108915585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ca13a473833f643b0da221e76e1e5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followSpeed: 2
+  yOffset: 3
+  xOffset: 0
+  target: {fileID: 1357000823}
 --- !u!1001 &2782013212683700909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4881,6 +4944,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2108915588}
   - {fileID: 1357000823}
   - {fileID: 1091136782}
   - {fileID: 1624039179}

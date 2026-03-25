@@ -759,6 +759,7 @@ GameObject:
   - component: {fileID: 1109001624}
   - component: {fileID: 1109001625}
   - component: {fileID: 1109001626}
+  - component: {fileID: 1109001627}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -956,6 +957,20 @@ MonoBehaviour:
   IceAccelerationMultiplier: 0.2
   IceDecelerationMultiplier: 0.2
   IceTurnControl: 0.3
+--- !u!114 &1109001627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109001615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b3fc79b02809014e98d31a5cb85a8a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respawnPoint: {x: 0, y: 0}
+  _respawnDelay: 1
 --- !u!1 &1209302970
 GameObject:
   m_ObjectHideFlags: 0
