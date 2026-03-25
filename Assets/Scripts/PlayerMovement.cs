@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class NewBehaviourScript : MonoBehaviour
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
     [SerializeField] private LayerMask _hookMask;
+    private bool _isOnIce;
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -30,6 +32,9 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
+
+
+
 
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
@@ -46,6 +51,26 @@ public class NewBehaviourScript : MonoBehaviour
 
 
     private float _time;
+
+
+
+    void Start()
+    {
+        Collider2D hit = Physics2D.OverlapCapsule(
+            _col.bounds.center,
+            _col.bounds.size,
+            _col.direction,
+            0f,
+            _stats.GroundLayer
+        );
+
+        if (hit != null)
+        {
+            transform.position += Vector3.up * 0.5f;
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -86,20 +111,20 @@ public class NewBehaviourScript : MonoBehaviour
             _jumpToConsume = true;
             _timeJumpWasPressed = _time;
         }
-           
+
     }
-        private void FixedUpdate()
-        {
-            CheckCollisions();
+    private void FixedUpdate()
+    {
+        CheckCollisions();
 
-            HandleDirection();
-            HandleGravity();
-            HandlePickaxeHook();
-            HandleJump();
-            ApplyMovement();
-        }
+        HandleDirection();
+        HandleGravity();
+        HandlePickaxeHook();
+        HandleJump();
+        ApplyMovement();
+    }
 
-        #region Collisions
+    #region Collisions
 
     private float _frameLeftGrounded = float.MinValue;
     private bool _grounded;
@@ -111,15 +136,33 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 boxCenter = _col.bounds.center;
         Vector2 boxSize = _col.bounds.size;
 
-        bool groundHit = Physics2D.CapsuleCast(
-           _col.bounds.center,
-            _col.bounds.size,
+        //Olivier Changed This
+        boxSize.y -= 0.05f; // shrink slightly
+
+        RaycastHit2D groundHit = Physics2D.CapsuleCast(
+            _col.bounds.center,
+            boxSize,
             _col.direction,
             0f,
             Vector2.down,
             _stats.GrounderDistance,
-            ~_stats.PlayerLayer
+            _stats.GroundLayer
         );
+
+        _isOnIce = false;
+        bool isGroundHit = groundHit.collider != null;
+
+
+
+        if (groundHit.collider != null)
+        {
+            if (groundHit.collider.CompareTag("SlipperyIce"))
+            {
+                _isOnIce = true;
+            }
+        }
+
+
 
         bool ceilingHit = Physics2D.CapsuleCast(
         _col.bounds.center,
@@ -128,11 +171,11 @@ public class NewBehaviourScript : MonoBehaviour
             0f,
             Vector2.up,
             _stats.GrounderDistance,
-            ~_stats.PlayerLayer
+            _stats.GroundLayer
         );
 
         if (ceilingHit)
-            _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
+            _frameVelocity.y = Mathf.Min(_frameVelocity.y, _stats.GroundingForce);
 
         if (!_grounded && groundHit)
         {
@@ -153,6 +196,12 @@ public class NewBehaviourScript : MonoBehaviour
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
         Debug.Log("Grounded: " + groundHit);
+
+
+
+
+
+
     }
 
 
@@ -194,18 +243,43 @@ public class NewBehaviourScript : MonoBehaviour
 
     #region Horizontal
 
+    //Olivier Changed This
     private void HandleDirection()
     {
         if (_isHooked) return;
 
+        float acceleration = _stats.Acceleration;
+        float deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
+
+        if (_isOnIce)
+        {
+            acceleration *= _stats.IceAccelerationMultiplier;
+            deceleration *= _stats.IceDecelerationMultiplier;
+
+            // harder to turn on ice
+            if (Mathf.Sign(_frameInput.Move.x) != Mathf.Sign(_frameVelocity.x) && _frameInput.Move.x != 0)
+            {
+                acceleration *= _stats.IceTurnControl;
+            }
+        }
+
         if (_frameInput.Move.x == 0)
         {
-            var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
+            _frameVelocity.x = Mathf.MoveTowards(
+                _frameVelocity.x,
+                0,
+                deceleration * Time.fixedDeltaTime
+            );
         }
         else
         {
-            _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
+            float targetSpeed = _frameInput.Move.x * _stats.MaxSpeed;
+
+            _frameVelocity.x = Mathf.MoveTowards(
+                _frameVelocity.x,
+                targetSpeed,
+                acceleration * Time.fixedDeltaTime
+            );
         }
     }
 
@@ -270,11 +344,11 @@ public class NewBehaviourScript : MonoBehaviour
                 Vector2 newPos = Vector2.MoveTowards(transform.position, _hookSnapTarget, _snapSpeed * Time.fixedDeltaTime);
                 _rb.MovePosition(newPos);
 
-               
+
                 if (Vector2.Distance(transform.position, _hookSnapTarget) < 0.01f)
                     _isSnapping = false;
 
-                return; 
+                return;
             }
 
             if (!IsNextToWall(out _, out _))
@@ -301,8 +375,8 @@ public class NewBehaviourScript : MonoBehaviour
             // Release after max duration
             if (_time >= _hookEndTime)
                 _isHooked = false;
-                _lastHookTime = _time;
-              
+            _lastHookTime = _time;
+
         }
     }
 
@@ -350,10 +424,12 @@ public class NewBehaviourScript : MonoBehaviour
             Debug.Log($"Right hit: {rightHit.collider?.name ?? "null"} | layer: {rightHit.collider?.gameObject.layer}");
             RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, _hookRange, hookMask);
 
-            if (rightHit.collider != null) { 
+            if (rightHit.collider != null)
+            {
                 hit = rightHit; wallDir = Vector2.right; return true;
             }
-            if (leftHit.collider != null) { 
+            if (leftHit.collider != null)
+            {
                 hit = leftHit; wallDir = Vector2.left; return true;
             }
         }
@@ -365,12 +441,13 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void SnapToWall(RaycastHit2D wallHit, Vector2 dir)
     {
-        
+
         float capsuleHalfWidth = _col.bounds.extents.x;
 
         float snappedX = wallHit.point.x - (dir.x * capsuleHalfWidth);
 
-        if (Mathf.Abs(transform.position.x - snappedX) > 0.05f) {
+        if (Mathf.Abs(transform.position.x - snappedX) > 0.05f)
+        {
             _hookSnapTarget = new Vector2(snappedX, transform.position.y);
             _isSnapping = true;
             _frameVelocity.x = 0f;
@@ -470,7 +547,7 @@ public class NewBehaviourScript : MonoBehaviour
             RaycastHit2D hit = Physics2D.Linecast(
                 previousPoint,
                 point,
-                _stats.GroundLayer   // <-- make sure this is your ground layer
+                _stats.GroundLayer
             );
 
             if (hit.collider != null)
@@ -500,7 +577,7 @@ public interface IPlayerController
 
     public event Action Jumped;
     public Vector2 FrameInput { get; }
-  }
+}
 
 
 
