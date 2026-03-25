@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,26 @@ public class NewBehaviourScript : MonoBehaviour
 
     private float _time;
 
+
+
+    void Start()
+    {
+        Collider2D hit = Physics2D.OverlapCapsule(
+            _col.bounds.center,
+            _col.bounds.size,
+            _col.direction,
+            0f,
+            _stats.GroundLayer
+        );
+
+        if (hit != null)
+        {
+            transform.position += Vector3.up * 0.5f;
+        }
+    }
+
+
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -88,20 +109,20 @@ public class NewBehaviourScript : MonoBehaviour
             _jumpToConsume = true;
             _timeJumpWasPressed = _time;
         }
-           
+
     }
-        private void FixedUpdate()
-        {
-            CheckCollisions();
+    private void FixedUpdate()
+    {
+        CheckCollisions();
 
-            HandleDirection();
-            HandleGravity();
-            HandlePickaxeHook();
-            HandleJump();
-            ApplyMovement();
-        }
+        HandleDirection();
+        HandleGravity();
+        HandlePickaxeHook();
+        HandleJump();
+        ApplyMovement();
+    }
 
-        #region Collisions
+    #region Collisions
 
     private float _frameLeftGrounded = float.MinValue;
     private bool _grounded;
@@ -114,24 +135,26 @@ public class NewBehaviourScript : MonoBehaviour
         Vector2 boxSize = _col.bounds.size;
 
         //Olivier Changed This
+        boxSize.y -= 0.05f; // shrink slightly
+
         RaycastHit2D groundHit = Physics2D.CapsuleCast(
-           _col.bounds.center,
-            _col.bounds.size,
+            _col.bounds.center,
+            boxSize,
             _col.direction,
             0f,
             Vector2.down,
             _stats.GrounderDistance,
-            ~_stats.PlayerLayer
+            _stats.GroundLayer
         );
 
         _isOnIce = false;
         bool isGroundHit = groundHit.collider != null;
 
-        
 
-        if(groundHit)
+
+        if (groundHit.collider != null)
         {
-            if(groundHit.collider.CompareTag("Slippery Ice"))
+            if (groundHit.collider.CompareTag("SlipperyIce"))
             {
                 _isOnIce = true;
             }
@@ -146,11 +169,11 @@ public class NewBehaviourScript : MonoBehaviour
             0f,
             Vector2.up,
             _stats.GrounderDistance,
-            ~_stats.PlayerLayer
+            _stats.GroundLayer
         );
 
         if (ceilingHit)
-            _frameVelocity.y = Mathf.Min(0, _frameVelocity.y);
+            _frameVelocity.y = Mathf.Min(_frameVelocity.y, _stats.GroundingForce);
 
         if (!_grounded && groundHit)
         {
@@ -173,9 +196,9 @@ public class NewBehaviourScript : MonoBehaviour
         Debug.Log("Grounded: " + groundHit);
 
 
-        
 
-    
+
+
 
     }
 
@@ -319,11 +342,11 @@ public class NewBehaviourScript : MonoBehaviour
                 Vector2 newPos = Vector2.MoveTowards(transform.position, _hookSnapTarget, _snapSpeed * Time.fixedDeltaTime);
                 _rb.MovePosition(newPos);
 
-               
+
                 if (Vector2.Distance(transform.position, _hookSnapTarget) < 0.01f)
                     _isSnapping = false;
 
-                return; 
+                return;
             }
 
             if (!IsNextToWall(out _, out _))
@@ -345,13 +368,13 @@ public class NewBehaviourScript : MonoBehaviour
             // Release after max duration
             if (_time >= _hookEndTime)
                 _isHooked = false;
-                _lastHookTime = _time;
-              
+            _lastHookTime = _time;
+
         }
     }
 
     private bool IsAtLedge(out Vector2 wallDir)
-     {   
+    {
         LayerMask hookMask = ~(1 << gameObject.layer);
         Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
         RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
@@ -390,10 +413,12 @@ public class NewBehaviourScript : MonoBehaviour
             RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, _hookRange, hookMask);
             RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, _hookRange, hookMask);
 
-            if (rightHit.collider != null) { 
+            if (rightHit.collider != null)
+            {
                 hit = rightHit; wallDir = Vector2.right; return true;
             }
-            if (leftHit.collider != null) { 
+            if (leftHit.collider != null)
+            {
                 hit = leftHit; wallDir = Vector2.left; return true;
             }
         }
@@ -405,12 +430,13 @@ public class NewBehaviourScript : MonoBehaviour
 
     private void SnapToWall(RaycastHit2D wallHit, Vector2 dir)
     {
-        
+
         float capsuleHalfWidth = _col.bounds.extents.x;
 
         float snappedX = wallHit.point.x - (dir.x * capsuleHalfWidth);
 
-        if (Mathf.Abs(transform.position.x - snappedX) > 0.05f) {
+        if (Mathf.Abs(transform.position.x - snappedX) > 0.05f)
+        {
             _hookSnapTarget = new Vector2(snappedX, transform.position.y);
             _isSnapping = true;
             _frameVelocity.x = 0f;
@@ -420,20 +446,20 @@ public class NewBehaviourScript : MonoBehaviour
     }
     private void TryHook()
     {
-            
-            if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
-            {
-                SnapToWall(wallHit, wallDir);
-                _isHooked = true;
-                _lastHookTime = _time;
-                _hookEndTime = _time + _hookDuration;
-                _frameVelocity = Vector2.zero;
 
-                if (_grounded)
-                {   
-                    _frameVelocity.y = _stats.JumpPower * 0.3f;
-                }
+        if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
+        {
+            SnapToWall(wallHit, wallDir);
+            _isHooked = true;
+            _lastHookTime = _time;
+            _hookEndTime = _time + _hookDuration;
+            _frameVelocity = Vector2.zero;
+
+            if (_grounded)
+            {
+                _frameVelocity.y = _stats.JumpPower * 0.3f;
             }
+        }
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
     }
 
@@ -504,7 +530,7 @@ public class NewBehaviourScript : MonoBehaviour
             RaycastHit2D hit = Physics2D.Linecast(
                 previousPoint,
                 point,
-                _stats.GroundLayer   // <-- make sure this is your ground layer
+                _stats.GroundLayer
             );
 
             if (hit.collider != null)
@@ -534,7 +560,7 @@ public interface IPlayerController
 
     public event Action Jumped;
     public Vector2 FrameInput { get; }
-  }
+}
 
 
 
