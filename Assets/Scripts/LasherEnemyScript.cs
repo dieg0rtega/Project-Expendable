@@ -6,11 +6,13 @@ public class LasherEnemyScript : MonoBehaviour
 {
     [SerializeField] private float _visionRange = 5f;
     [SerializeField] private float _attackDelay = 1.5f;
+    [SerializeField] private float _extendSpeed = 5f;
+    [SerializeField] private float _retractSpeed = 8f;
+    [SerializeField] private float _maxExtendDistance = 3f;
+    [SerializeField] private float _holdDuration = 0.5f;
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _visionBlockingLayers;
     [SerializeField] private GameObject _hitbox;
-    [SerializeField] private Vector2 _hitboxExtendedPos;
-    [SerializeField] private Vector2 _hitboxRetractedPos;
 
     private float _playerSeenTimer = 0f;
     private bool _isAttacking = false;
@@ -28,39 +30,85 @@ public class LasherEnemyScript : MonoBehaviour
             _playerSeenTimer += Time.deltaTime;
 
             if (_playerSeenTimer >= _attackDelay && !_isAttacking)
-                ExtendHitbox();
+                StartCoroutine(TentacleAttack());
         }
         else
         {
             _playerSeenTimer = 0f;
-            RetractHitbox();
         }
+    }
+
+    private IEnumerator TentacleAttack()
+    {
+        Debug.Log("Attack started");
+        _isAttacking = true;
+
+        Vector2 worldDir = (_player.transform.position - transform.position).normalized;
+        Vector2 localDir = transform.InverseTransformDirection(worldDir);
+
+        Vector2 retractedPos = Vector2.zero;
+        Vector2 extendedPos = localDir * _maxExtendDistance;
+
+        // Rotate hitbox to face player
+        float angle = Mathf.Atan2(worldDir.y, worldDir.x) * Mathf.Rad2Deg;
+        _hitbox.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+        // Extend outward
+        while (Vector2.Distance(_hitbox.transform.localPosition, extendedPos) > 0.05f)
+        {
+            _hitbox.transform.localPosition = Vector2.MoveTowards(
+                _hitbox.transform.localPosition,
+                extendedPos,
+                _extendSpeed * Time.deltaTime
+            );
+            float progress = Vector2.Distance(retractedPos, _hitbox.transform.localPosition) / _maxExtendDistance;
+            _hitbox.transform.localScale = new Vector3(progress * _maxExtendDistance, 0.2f, 1f);
+            yield return null;
+        }
+
+        // Hold at full extension
+        yield return new WaitForSeconds(_holdDuration);
+
+        // Retract back
+        while (Vector2.Distance(_hitbox.transform.localPosition, retractedPos) > 0.05f)
+        {
+            _hitbox.transform.localPosition = Vector2.MoveTowards(
+                _hitbox.transform.localPosition,
+                retractedPos,
+                _retractSpeed * Time.deltaTime
+            );
+            yield return null;
+        }
+
+        _hitbox.transform.localPosition = retractedPos;
+        _isAttacking = false;
     }
 
     private bool CanSeePlayer()
     {
-        Vector2 directionToPlayer = (_player.transform.position - transform.position).normalized;
+        Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y + 0.5f);
+        Vector2 playerCenter = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.5f);
+        Vector2 directionToPlayer = (playerCenter - rayOrigin).normalized;
+        float distanceToPlayer = Vector2.Distance(rayOrigin, playerCenter);
 
-        RaycastHit2D hit = Physics2D.Raycast(
-            transform.position,
-            directionToPlayer,
-            _visionRange,
-            _playerLayer | _visionBlockingLayers
-        );
+        RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, directionToPlayer, _visionRange);
 
-        return hit.collider != null && hit.collider.CompareTag("Player");
-    }
+        foreach (RaycastHit2D hit in hits)
+        {
+            // Skip anything that is part of this enemy
+            if (hit.collider.transform.IsChildOf(transform) || hit.collider.gameObject == gameObject) continue;
 
-    private void ExtendHitbox()
-    {
-        _isAttacking = true;
-        _hitbox.transform.localPosition = _hitboxExtendedPos;
-    }
+            // Skip Edge2
+            if (hit.collider.name == "Edge2") continue;
 
-    private void RetractHitbox()
-    {
-        _isAttacking = false;
-        _hitbox.transform.localPosition = _hitboxRetractedPos;
+            // If we hit the player first we can see them
+            if (hit.collider.CompareTag("Player")) return true;
+
+            // Something else blocked vision
+            return false;
+        }
+
+        return false;
     }
 
     private void OnDrawGizmosSelected()

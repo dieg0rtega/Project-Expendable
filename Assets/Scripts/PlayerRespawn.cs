@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerRespawn : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class PlayerRespawn : MonoBehaviour
         _rb.velocity = Vector2.zero;
         _controller.enabled = true;
 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GetComponent<SpriteRenderer>().enabled = true;
 
         _isDead = false;
