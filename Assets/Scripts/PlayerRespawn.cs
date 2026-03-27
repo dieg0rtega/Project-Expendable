@@ -7,13 +7,13 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private Vector2 _respawnPoint = Vector2.zero;
     [SerializeField] private float _respawnDelay = 1f;
 
-    private NewBehaviourScript _controller;
+    private PlayerMovement _controller;
     private Rigidbody2D _rb;
     private bool _isDead;
 
     private void Awake()
     {
-        _controller = GetComponent<NewBehaviourScript>();
+        _controller = GetComponent<PlayerMovement>();
         _rb = GetComponent<Rigidbody2D>();
     }
 

@@ -7,7 +7,7 @@ using System;
 
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 
     // The CHaracter's Movement Intialzied Variables
