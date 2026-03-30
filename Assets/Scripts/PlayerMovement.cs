@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
     private bool _isOnIce;
+    private bool _facingRight = true;
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -279,6 +280,17 @@ public class PlayerMovement : MonoBehaviour
                 acceleration * Time.fixedDeltaTime
             );
         }
+
+        if (_frameInput.Move.x > 0 && !_facingRight)
+        {
+            Flip();
+        }
+        else if (_frameInput.Move.x < 0 && _facingRight)
+        {
+            Flip();
+        }
+
+
     }
 
     #endregion
@@ -547,6 +559,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    //Player Turn
+
+    private void Flip()
+    {
+        _facingRight = !_facingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+
+
 }
 
 public struct FrameInput
@@ -564,6 +589,12 @@ public interface IPlayerController
     public event Action Jumped;
     public Vector2 FrameInput { get; }
 }
+
+
+
+
+
+
 
 
 
