@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LasherEnemyScript : MonoBehaviour
@@ -13,19 +12,29 @@ public class LasherEnemyScript : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _visionBlockingLayers;
     [SerializeField] private GameObject _hitbox;
+    [SerializeField] private Vector2 _facingDirection = Vector2.right;
+    [SerializeField] private float _detectionAngle = 20f;
 
     private float _playerSeenTimer = 0f;
     private bool _isAttacking = false;
     private GameObject _player;
+    private Vector3 _hitboxOriginalLocalPos;
+    private Vector3 _hitboxOriginalLocalScale;
+    private Vector3 _hitboxOriginalWorldPos;
 
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
+        _hitboxOriginalWorldPos = _hitbox.transform.position;
+        _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
+        _hitboxOriginalLocalScale = _hitbox.transform.localScale;
     }
 
     private void Update()
     {
-        if (CanSeePlayer())
+        bool canSee = CanSeePlayer();
+
+        if (canSee)
         {
             _playerSeenTimer += Time.deltaTime;
 
@@ -40,71 +49,59 @@ public class LasherEnemyScript : MonoBehaviour
 
     private IEnumerator TentacleAttack()
     {
-        Debug.Log("Attack started");
         _isAttacking = true;
 
         Vector2 worldDir = (_player.transform.position - transform.position).normalized;
-        Vector2 localDir = transform.InverseTransformDirection(worldDir);
 
-        Vector2 retractedPos = Vector2.zero;
-        Vector2 extendedPos = localDir * _maxExtendDistance;
-
-        // Rotate hitbox to face player
         float angle = Mathf.Atan2(worldDir.y, worldDir.x) * Mathf.Rad2Deg;
-        _hitbox.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+        _hitbox.transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-        // Extend outward
-        while (Vector2.Distance(_hitbox.transform.localPosition, extendedPos) > 0.05f)
+        // Extend by scaling only
+        float currentScale = 0f;
+        while (currentScale < _maxExtendDistance)
         {
-            _hitbox.transform.localPosition = Vector2.MoveTowards(
-                _hitbox.transform.localPosition,
-                extendedPos,
-                _extendSpeed * Time.deltaTime
-            );
-            float progress = Vector2.Distance(retractedPos, _hitbox.transform.localPosition) / _maxExtendDistance;
-            _hitbox.transform.localScale = new Vector3(progress * _maxExtendDistance, 0.2f, 1f);
+            currentScale = Mathf.MoveTowards(currentScale, _maxExtendDistance, _extendSpeed * Time.deltaTime);
+            _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
+            _hitbox.transform.position = (Vector2)transform.position + worldDir * (currentScale / 2f);
             yield return null;
         }
 
-        // Hold at full extension
         yield return new WaitForSeconds(_holdDuration);
 
-        // Retract back
-        while (Vector2.Distance(_hitbox.transform.localPosition, retractedPos) > 0.05f)
+        // Retract by scaling back down
+        while (currentScale > 0f)
         {
-            _hitbox.transform.localPosition = Vector2.MoveTowards(
-                _hitbox.transform.localPosition,
-                retractedPos,
-                _retractSpeed * Time.deltaTime
-            );
+            currentScale = Mathf.MoveTowards(currentScale, 0f, _retractSpeed * Time.deltaTime);
+            _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
+            _hitbox.transform.position = (Vector2)transform.position + worldDir * (currentScale / 2f);
             yield return null;
         }
 
-        _hitbox.transform.localPosition = retractedPos;
+        // Reset
+        _hitbox.transform.localPosition = _hitboxOriginalLocalPos;
+        _hitbox.transform.localScale = _hitboxOriginalLocalScale;
+        _hitbox.transform.localRotation = Quaternion.identity;
+
         _isAttacking = false;
     }
 
     private bool CanSeePlayer()
     {
-        Vector2 rayOrigin = new Vector2(transform.position.x, transform.position.y + 0.5f);
-        Vector2 playerCenter = new Vector2(_player.transform.position.x, _player.transform.position.y + 0.5f);
-        Vector2 directionToPlayer = (playerCenter - rayOrigin).normalized;
-        float distanceToPlayer = Vector2.Distance(rayOrigin, playerCenter);
+        Vector2 directionToPlayer = (_player.transform.position - transform.position).normalized;
+
+        float angle = Vector2.Angle(_facingDirection, directionToPlayer);
+        if (angle > _detectionAngle) return false;
+
+        Vector2 rayOrigin = (Vector2)transform.position + _facingDirection * 0.5f;
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, directionToPlayer, _visionRange);
+        System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
         foreach (RaycastHit2D hit in hits)
         {
-            // Skip anything that is part of this enemy
             if (hit.collider.transform.IsChildOf(transform) || hit.collider.gameObject == gameObject) continue;
-
-            // Skip Edge2
             if (hit.collider.name == "Edge2") continue;
-
-            // If we hit the player first we can see them
             if (hit.collider.CompareTag("Player")) return true;
-
-            // Something else blocked vision
             return false;
         }
 
@@ -115,6 +112,12 @@ public class LasherEnemyScript : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _visionRange);
+
+        Vector3 leftBound = Quaternion.Euler(0, 0, _detectionAngle) * (Vector3)_facingDirection * _visionRange;
+        Vector3 rightBound = Quaternion.Euler(0, 0, -_detectionAngle) * (Vector3)_facingDirection * _visionRange;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(transform.position, leftBound);
+        Gizmos.DrawRay(transform.position, rightBound);
 
         if (_player != null)
         {
