@@ -251,18 +251,30 @@ public class PlayerMovement : MonoBehaviour
         float deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
 
         if (_isOnIce)
-        {
-            acceleration *= _stats.IceAccelerationMultiplier;
-            deceleration *= _stats.IceDecelerationMultiplier;
-
-            // harder to turn on ice
-            if (Mathf.Sign(_frameInput.Move.x) != Mathf.Sign(_frameVelocity.x) && _frameInput.Move.x != 0)
+            if (_isOnIce)
             {
-                acceleration *= _stats.IceTurnControl;
-            }
-        }
+                acceleration *= _stats.IceAccelerationMultiplier;
+                deceleration *= _stats.IceDecelerationMultiplier;
 
-        if (_frameInput.Move.x == 0)
+                // Apply constant sliding force
+                if (_frameVelocity.x != 0)
+                {
+                    _frameVelocity.x += Mathf.Sign(_frameVelocity.x) * _stats.IceSlideForce * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    // If player just landed, give initial push
+                    _frameVelocity.x = _facingRight ? _stats.IceSlideForce : -_stats.IceSlideForce;
+                }
+
+                // Reduce turning control heavily
+                if (_frameInput.Move.x != 0)
+                {
+                    acceleration *= _stats.IceTurnControl;
+                }
+            }
+
+        if (_frameInput.Move.x == 0 && !_isOnIce)
         {
             _frameVelocity.x = Mathf.MoveTowards(
                 _frameVelocity.x,
