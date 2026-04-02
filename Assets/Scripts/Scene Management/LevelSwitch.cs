@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelSwitch : MonoBehaviour
 {
+    // Get black screen image
+    [SerializeField] private GameObject fadeImage;
+    private Image imageComponent;
+
+    // How long the fade happens and the alpha transparency it reaches
+    [SerializeField] public float fadeDuration = 0.5f;
+    [SerializeField] public float targetAlphaStart = 0.0f;
+    [SerializeField] public float targetAlphaEnd = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        imageComponent = fadeImage.GetComponent<Image>();
+        Color startColor = imageComponent.color;
+        imageComponent.color = new Color(startColor.r, startColor.g, startColor.b, targetAlphaEnd);
+        StartCoroutine(SceneController.instance.LevelFade(imageComponent, targetAlphaStart, fadeDuration, Update));
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -23,7 +34,8 @@ public class LevelSwitch : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            SceneController.instance.NextLevel();
+            StopAllCoroutines(); // Prevents multiple fades from overlapping
+            StartCoroutine(SceneController.instance.LevelFade(imageComponent, targetAlphaEnd, fadeDuration, SceneController.instance.NextLevel)); // begin fade animation
         }
     }
 }
