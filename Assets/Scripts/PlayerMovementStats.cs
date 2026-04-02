@@ -69,5 +69,7 @@ public class PlayerMovementStats : MonoBehaviour
     public float IceDecelerationMultiplier = 0.2f;
     [Tooltip("How much control you have when trying to turn on ice")]
     public float IceTurnControl = 0.3f;
+    [Tooltip("Constant slide force applied while on ice")]
+    public float IceSlideForce = 20f;
 
 }

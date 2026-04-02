@@ -17,8 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private FrameInput _frameInput;
     private Vector2 _frameVelocity;
     private bool _cachedQueryStartInColliders;
-    [SerializeField] private LayerMask _hookMask;
     private bool _isOnIce;
+    private bool _facingRight = true;
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -39,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
     private bool _isLedgeBoosting;
-    private Vector2 _hookedWallDir;
 
     private float _lastHookTime = float.MinValue;
     private bool _isHooked;
@@ -252,18 +251,30 @@ public class PlayerMovement : MonoBehaviour
         float deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
 
         if (_isOnIce)
-        {
-            acceleration *= _stats.IceAccelerationMultiplier;
-            deceleration *= _stats.IceDecelerationMultiplier;
-
-            // harder to turn on ice
-            if (Mathf.Sign(_frameInput.Move.x) != Mathf.Sign(_frameVelocity.x) && _frameInput.Move.x != 0)
+            if (_isOnIce)
             {
-                acceleration *= _stats.IceTurnControl;
-            }
-        }
+                acceleration *= _stats.IceAccelerationMultiplier;
+                deceleration *= _stats.IceDecelerationMultiplier;
 
-        if (_frameInput.Move.x == 0)
+                // Apply constant sliding force
+                if (_frameVelocity.x != 0)
+                {
+                    _frameVelocity.x += Mathf.Sign(_frameVelocity.x) * _stats.IceSlideForce * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    // If player just landed, give initial push
+                    _frameVelocity.x = _facingRight ? _stats.IceSlideForce : -_stats.IceSlideForce;
+                }
+
+                // Reduce turning control heavily
+                if (_frameInput.Move.x != 0)
+                {
+                    acceleration *= _stats.IceTurnControl;
+                }
+            }
+
+        if (_frameInput.Move.x == 0 && !_isOnIce)
         {
             _frameVelocity.x = Mathf.MoveTowards(
                 _frameVelocity.x,
@@ -281,6 +292,17 @@ public class PlayerMovement : MonoBehaviour
                 acceleration * Time.fixedDeltaTime
             );
         }
+
+        if (_frameInput.Move.x > 0 && !_facingRight)
+        {
+            Flip();
+        }
+        else if (_frameInput.Move.x < 0 && _facingRight)
+        {
+            Flip();
+        }
+
+
     }
 
     #endregion
@@ -362,13 +384,8 @@ public class PlayerMovement : MonoBehaviour
             if (_frameInput.JumpDown || _jumpToConsume)
             {
                 _isHooked = false;
-                _isLedgeBoosting = false;
-                _isSnapping = false;
-                float pushDir = -_hookedWallDir.x; // opposite direction of wall
-                _frameVelocity.x = pushDir * _stats.MaxSpeed * 1.5f;
-                _frameVelocity.y = _stats.JumpPower * 0.75f;
-
-                _jumpToConsume = false;
+                _frameVelocity.y = _stats.JumpPower * 2;
+                _jumpToConsume = true;
                 return;
             }
 
@@ -381,8 +398,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private bool IsAtLedge(out Vector2 wallDir)
-     {
-        LayerMask hookMask = _hookMask;
+    {
+        LayerMask hookMask = ~(1 << gameObject.layer);
         Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
         RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
         RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
@@ -409,7 +426,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsNextToWall(out RaycastHit2D hit, out Vector2 wallDir)
     {
-        LayerMask hookMask = _hookMask;
+        LayerMask hookMask = ~(1 << gameObject.layer); //Temp until I fix the layering issue
         Vector2 center = _col.bounds.center;
         Vector2 bottom = new Vector2(center.x, _col.bounds.min.y + 0.3f);
         Vector2 top = new Vector2(center.x, _col.bounds.max.y - 0.1f);
@@ -417,11 +434,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2[] origins = { bottom, center, top };
         foreach (var origin in origins)
         {
-            Debug.DrawRay(origin, Vector2.right * _hookRange, Color.red, 1f);
-            Debug.DrawRay(origin, Vector2.left * _hookRange, Color.red, 1f);
-
             RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, _hookRange, hookMask);
-            Debug.Log($"Right hit: {rightHit.collider?.name ?? "null"} | layer: {rightHit.collider?.gameObject.layer}");
             RaycastHit2D leftHit = Physics2D.Raycast(origin, Vector2.left, _hookRange, hookMask);
 
             if (rightHit.collider != null)
@@ -457,32 +470,29 @@ public class PlayerMovement : MonoBehaviour
     }
     private void TryHook()
     {
-            
-            if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
-            {
-                _hookedWallDir = wallDir;
-                SnapToWall(wallHit, wallDir);
-                _isHooked = true;
-                _lastHookTime = _time;
-                _hookEndTime = _time + _hookDuration;
-                _frameVelocity = Vector2.zero;
 
-                if (_grounded)
-                {   
+        if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
+        {
+            SnapToWall(wallHit, wallDir);
+            _isHooked = true;
+            _lastHookTime = _time;
+            _hookEndTime = _time + _hookDuration;
+            _frameVelocity = Vector2.zero;
 
-                    _frameVelocity.y = _stats.JumpPower * 0.3f;
-                }
-            }
-            else
+            if (_grounded)
             {
-                Debug.Log("No wall detected");
+                _frameVelocity.y = _stats.JumpPower * 0.3f;
             }
-            Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+        }
+        Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
     }
 
 
 
     #endregion
+
+
+
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
 #if UNITY_EDITOR
@@ -561,6 +571,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
+    //Player Turn
+
+    private void Flip()
+    {
+        _facingRight = !_facingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+
+
 }
 
 public struct FrameInput
@@ -578,6 +601,12 @@ public interface IPlayerController
     public event Action Jumped;
     public Vector2 FrameInput { get; }
 }
+
+
+
+
+
+
 
 
 
