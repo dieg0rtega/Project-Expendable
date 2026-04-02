@@ -194,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
-        Debug.Log("Grounded: " + groundHit);
+        
 
 
 
