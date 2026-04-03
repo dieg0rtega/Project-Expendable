@@ -99,10 +99,7 @@ public class LasherEnemyScript : MonoBehaviour
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.collider.transform.IsChildOf(transform) || hit.collider.gameObject == gameObject) continue;
-            if (hit.collider.name == "Edge2") continue;
-            if (hit.collider.CompareTag("Player")) return true;
-            return false;
+            if (hit.collider.gameObject == _player) return true;
         }
 
         return false;

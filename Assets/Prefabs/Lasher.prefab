@@ -265,11 +265,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visionRange: 10
-  _attackDelay: 1.5
-  _extendSpeed: 5
-  _retractSpeed: 8
-  _maxExtendDistance: 3
-  _holdDuration: 0.5
+  _attackDelay: 0.2
+  _extendSpeed: 50
+  _retractSpeed: 5
+  _maxExtendDistance: 10
+  _holdDuration: 3
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
