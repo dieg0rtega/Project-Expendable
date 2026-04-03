@@ -399,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsAtLedge(out Vector2 wallDir)
     {
-        LayerMask hookMask = ~(1 << gameObject.layer);
+        LayerMask hookMask = _stats.GroundLayer;
         Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
         RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
         RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
@@ -426,7 +426,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsNextToWall(out RaycastHit2D hit, out Vector2 wallDir)
     {
-        LayerMask hookMask = ~(1 << gameObject.layer); //Temp until I fix the layering issue
+        LayerMask hookMask = _stats.GroundLayer;
         Vector2 center = _col.bounds.center;
         Vector2 bottom = new Vector2(center.x, _col.bounds.min.y + 0.3f);
         Vector2 top = new Vector2(center.x, _col.bounds.max.y - 0.1f);

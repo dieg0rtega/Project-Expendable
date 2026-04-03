@@ -49,4 +49,11 @@ public class SceneController : MonoBehaviour
         fadeImage.color = new Color(startColor.r, startColor.g, startColor.b, target); // assign the target alpha value after animation ends
         whenDone?.Invoke();
     }
+
+    public IEnumerator SetTransparency(Image image, float target)
+    {
+        Color startColor = image.color;
+        image.color = new Color(startColor.r, startColor.g, startColor.b, target);
+        yield return null;
+    }
 }

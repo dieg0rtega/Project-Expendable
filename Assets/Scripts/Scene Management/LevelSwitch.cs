@@ -20,8 +20,7 @@ public class LevelSwitch : MonoBehaviour
     void Start()
     {
         imageComponent = fadeImage.GetComponent<Image>();
-        Color startColor = imageComponent.color;
-        imageComponent.color = new Color(startColor.r, startColor.g, startColor.b, targetAlphaEnd);
+        StartCoroutine(SceneController.instance.SetTransparency(imageComponent, targetAlphaEnd));
         StartCoroutine(SceneController.instance.LevelFade(imageComponent, targetAlphaStart, fadeDuration, Update));
     }
 
