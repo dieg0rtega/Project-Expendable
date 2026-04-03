@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _snapSpeed = 15f;
 
 
+    [SerializeField] private AudioClip jumpSoundClip;
 
 
     private Vector2 _hookSnapTarget;
@@ -236,6 +237,10 @@ public class PlayerMovement : MonoBehaviour
         _coyoteUsable = false;
         _frameVelocity.y = _stats.JumpPower;
         Jumped?.Invoke();
+
+        //Plays Jump Sound
+        SoundFXManager.instance.PlaySoundClip(jumpSoundClip, transform, 1f);
+
     }
 
     #endregion
