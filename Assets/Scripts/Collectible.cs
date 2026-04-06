@@ -11,15 +11,17 @@ public class Collectible : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            try
-        {
-            Debug.Log(flavorText);
-        } 
-        catch (KeyNotFoundException)
-        {
-            Debug.Log("Text not found.");
+            CollectibleUI ui = FindObjectOfType<CollectibleUI>();
+
+            if (ui != null)
+            {
+                ui.Show(flavorText);
+            }
+
+            gameObject.SetActive(false);
+       
         }
         }
-    }
+    
 
 }
