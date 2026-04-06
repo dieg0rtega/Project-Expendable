@@ -2447,7 +2447,10 @@ MonoBehaviour:
   _ledgeClearHeight: 0.6
   _hookCooldown: 0.5
   _snapSpeed: 15
-  jumpSoundClip: {fileID: 8300000, guid: 4e242d1437c4fb643a4634e618dc7cc3, type: 3}
+  jumpSoundClips:
+  - {fileID: 8300000, guid: 4e242d1437c4fb643a4634e618dc7cc3, type: 3}
+  - {fileID: 8300000, guid: 6fa4ea2fe8490d743b631a5504f3b25d, type: 3}
+  - {fileID: 8300000, guid: dd26839ac5c1e4040a4788f24000b1dd, type: 3}
 --- !u!70 &1723225547
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2878,6 +2881,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871788548}
   m_CullTransparentMesh: 1
+--- !u!1 &1898085844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1898085846}
+  - component: {fileID: 1898085845}
+  m_Layer: 0
+  m_Name: SoundMixerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1898085845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898085844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71edb81e80668754d935bc7e159c363b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1898085846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898085844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.9678516, y: 2.3341398, z: 0.14491904}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1931791212
 GameObject:
   m_ObjectHideFlags: 0
@@ -3564,3 +3611,4 @@ SceneRoots:
   - {fileID: 373605676}
   - {fileID: 1865810799}
   - {fileID: 2136203880}
+  - {fileID: 1898085846}
