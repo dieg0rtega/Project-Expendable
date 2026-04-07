@@ -52,28 +52,33 @@ public class LasherEnemyScript : MonoBehaviour
         _isAttacking = true;
 
         Vector2 worldDir = (_player.transform.position - transform.position).normalized;
-
         float angle = Mathf.Atan2(worldDir.y, worldDir.x) * Mathf.Rad2Deg;
         _hitbox.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        _hitbox.transform.position = transform.position;
 
-        // Extend by scaling only
-        float currentScale = 0f;
-        while (currentScale < _maxExtendDistance)
+        // Extend
+        float elapsed = 0f;
+        float duration = _maxExtendDistance / _extendSpeed;
+        while (elapsed < duration)
         {
-            currentScale = Mathf.MoveTowards(currentScale, _maxExtendDistance, _extendSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float currentScale = Mathf.Lerp(0f, _maxExtendDistance, t);
             _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
-            _hitbox.transform.position = (Vector2)transform.position + worldDir * (currentScale / 2f);
             yield return null;
         }
 
         yield return new WaitForSeconds(_holdDuration);
 
-        // Retract by scaling back down
-        while (currentScale > 0f)
+        // Retract
+        elapsed = 0f;
+        duration = _maxExtendDistance / _retractSpeed;
+        while (elapsed < duration)
         {
-            currentScale = Mathf.MoveTowards(currentScale, 0f, _retractSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float currentScale = Mathf.Lerp(_maxExtendDistance, 0f, t);
             _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
-            _hitbox.transform.position = (Vector2)transform.position + worldDir * (currentScale / 2f);
             yield return null;
         }
 
