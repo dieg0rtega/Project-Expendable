@@ -33,8 +33,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
 
-
+    // Player Sounds
     [SerializeField] private AudioClip[] jumpSoundClips;
+    [SerializeField] private AudioClip walkingSoundClips;
+    [SerializeField] private float _footstepInterval = 0.4f;
+    [SerializeField] private AudioClip[] landingClips;
+    private float _footstepTimer;
+
 
 
     private Vector2 _hookSnapTarget;
@@ -180,6 +185,12 @@ public class PlayerMovement : MonoBehaviour
         if (!_grounded && groundHit)
         {
             _grounded = true;
+            // Play landing sound ONLY if falling
+            if (Mathf.Abs(_frameVelocity.y) > 5f)
+            {
+                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
+                SoundFXManager.instance.PlayRandomSoundClip(landingClips, transform, 1f);
+            }
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _endedJumpEarly = false;
@@ -305,6 +316,26 @@ public class PlayerMovement : MonoBehaviour
         else if (_frameInput.Move.x < 0 && _facingRight)
         {
             Flip();
+        }
+
+
+        //SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
+
+        bool isMoving = Mathf.Abs(_frameVelocity.x) > 0.1f;
+
+        if (_grounded && isMoving)
+        {
+            _footstepTimer -= Time.fixedDeltaTime;
+
+            if (_footstepTimer <= 0f)
+            {
+                SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
+                _footstepTimer = _footstepInterval;
+            }
+        }
+        else
+        {
+            _footstepTimer = 0f;
         }
 
 
@@ -558,7 +589,7 @@ public class PlayerMovement : MonoBehaviour
      verticalSpeed * t - 0.5f * _stats.FallAcceleration * t * t
  );
 
-            // Use a GROUND layer mask here � not PlayerLayer
+            // Use a GROUND layer mask here not PlayerLayer
             RaycastHit2D hit = Physics2D.Linecast(
                 previousPoint,
                 point,
