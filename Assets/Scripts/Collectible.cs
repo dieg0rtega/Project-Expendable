@@ -18,7 +18,7 @@ public class Collectible : MonoBehaviour
                 ui.Show(flavorText);
             }
 
-            gameObject.SetActive(false);
+            
        
         }
         }
