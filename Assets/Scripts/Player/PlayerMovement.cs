@@ -147,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
+        
     }
 
     #region Collisions
