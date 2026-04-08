@@ -7,7 +7,8 @@ public class AudioManager : MonoBehaviour
     [Header("---Audio Source---")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
-  
+    [SerializeField] AudioSource ambienceSource;
+
 
     [Header("---Audio Clip---")]
     public AudioClip death;
@@ -25,7 +26,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        musicSource.clip = snow;
+        ambienceSource.clip = snow;
+        ambienceSource.Play();
         musicSource.Play();
     }
 
