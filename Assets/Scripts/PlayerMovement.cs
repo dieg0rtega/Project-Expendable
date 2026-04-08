@@ -33,8 +33,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
 
-
-
+    [Header("Animator")]
+    [SerializeField] private Animator Animator;
 
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
@@ -76,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<CapsuleCollider2D>();
 
-
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
@@ -98,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
             HookDown = Input.GetMouseButton(0),
         };
-
+        
         if (_stats.SnapInput)
         {
             _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
@@ -111,6 +110,14 @@ public class PlayerMovement : MonoBehaviour
             _timeJumpWasPressed = _time;
         }
 
+        if (_frameInput.Move.x != 0)
+        {
+            Animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            Animator.SetBool("IsWalking", false);
+        }
     }
     private void FixedUpdate()
     {
@@ -302,7 +309,6 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
-
     }
 
     #endregion
@@ -473,6 +479,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
         {
+            if ((_facingRight && wallDir == Vector2.left) || (!_facingRight && wallDir == Vector2.right))
+            {
+                Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+                return;
+            }
+
             SnapToWall(wallHit, wallDir);
             _isHooked = true;
             _lastHookTime = _time;
