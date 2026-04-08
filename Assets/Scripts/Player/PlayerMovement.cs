@@ -35,10 +35,16 @@ public class PlayerMovement : MonoBehaviour
 
     // Player Sounds
     [SerializeField] private AudioClip[] jumpSoundClips;
-    [SerializeField] private AudioClip walkingSoundClips;
+    [SerializeField] private AudioClip[] walkingSoundClips;
     [SerializeField] private float _footstepInterval = 0.4f;
     [SerializeField] private AudioClip[] landingClips;
     private float _footstepTimer;
+    AudioManager audioManager;
+    private bool _justLanded;
+
+
+
+
 
 
 
@@ -81,7 +87,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<CapsuleCollider2D>();
-
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+       
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
@@ -91,6 +98,19 @@ public class PlayerMovement : MonoBehaviour
     {
         _time += Time.deltaTime;
         GatherInput();
+        HandleFootsteps();
+
+        if (_justLanded)
+        {
+            if (Mathf.Abs(_frameVelocity.y) > 5f)
+            {
+                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
+                audioManager.PlayRandomSFX(landingClips, volume);
+            }
+
+            _justLanded = false;
+        }
+
     }
 
 
@@ -185,11 +205,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_grounded && groundHit)
         {
             _grounded = true;
+            _justLanded = true;
+
             // Play landing sound ONLY if falling
             if (Mathf.Abs(_frameVelocity.y) > 5f)
             {
                 float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
-                SoundFXManager.instance.PlayRandomSoundClip(landingClips, transform, 1f);
+                //audioManager.PlayRandomSFX(landingClips, volume);
             }
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
@@ -213,6 +235,27 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+
+    private void HandleFootsteps()
+    {
+        bool isMoving = Mathf.Abs(_frameInput.Move.x) > 0.1f;
+
+        if (_grounded && isMoving)
+        {
+            _footstepTimer -= Time.deltaTime;
+
+            if (_footstepTimer <= 0f)
+            {
+                audioManager.PlayRandomSFX(walkingSoundClips);
+                _footstepTimer = _footstepInterval;
+            }
+        }
+        else
+        {
+            _footstepTimer = 0f;
+        }
     }
 
 
@@ -251,7 +294,8 @@ public class PlayerMovement : MonoBehaviour
 
         //Plays Jump Sound
         //SoundFXManager.instance.PlaySoundClip(jumpSoundClip, transform, 1f);
-        SoundFXManager.instance.PlayRandomSoundClip(jumpSoundClips, transform, 1f);
+        //SoundFXManager.instance.PlayRandomSoundClip(jumpSoundClips, transform, 1f);
+        audioManager.PlayRandomSFX(jumpSoundClips);
     }
 
     #endregion
@@ -321,22 +365,7 @@ public class PlayerMovement : MonoBehaviour
 
         //SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
 
-        bool isMoving = Mathf.Abs(_frameVelocity.x) > 0.1f;
 
-        if (_grounded && isMoving)
-        {
-            _footstepTimer -= Time.fixedDeltaTime;
-
-            if (_footstepTimer <= 0f)
-            {
-                SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
-                _footstepTimer = _footstepInterval;
-            }
-        }
-        else
-        {
-            _footstepTimer = 0f;
-        }
 
 
     }

@@ -8,6 +8,7 @@ TagManager:
   - Hazard
   - Hidden
   - SlipperyIce
+  - Audio
   layers:
   - Default
   - TransparentFX
