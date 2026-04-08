@@ -2397,7 +2397,7 @@ Transform:
   m_GameObject: {fileID: 797373679}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.042419, y: 0, z: -10}
+  m_LocalPosition: {x: 11.016505, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3994,7 +3994,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
       propertyPath: flavorText
-      value: Flavor Text 3
+      value: "A good paragraph provides information on one well-defined aspect of
+        the topic you\u2019re discussing in your article. Consider the two paragraphs
+        under the previous heading in this article, for example. They address why
+        paragraphs make your text easy to scan. In addition, it\u2019s good practice
+        to start your paragraphs with a core sentence that summarizes the paragraph\u2019s
+        content. This will help readers decide whether a paragraph is interesting
+        to read.  "
       objectReference: {fileID: 0}
     - target: {fileID: 2814009449151502022, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
       propertyPath: m_Name
