@@ -84,10 +84,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _time += Time.deltaTime;
         GatherInput();
-        Animator.SetBool("IsJumping", !_grounded && _frameVelocity.y > 0);
-        Animator.SetBool("IsFalling", !_grounded && _frameVelocity.y < 0);
-        Animator.SetBool("IsGrounded", _grounded);
-        Animator.SetBool("IsWalking", _frameInput.Move.x != 0 && _grounded);
+    
     }
 
 
@@ -125,6 +122,13 @@ public class PlayerMovement : MonoBehaviour
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
+        Animator.SetBool("IsJumping", !_grounded && _frameVelocity.y > 0);
+        Animator.SetBool("IsFalling", !_grounded && _frameVelocity.y < 0);
+        Animator.SetBool("IsGrounded", _grounded);
+        Animator.SetBool("IsWalking", _frameInput.Move.x != 0 && _grounded);
+        Animator.SetBool("IsHooked", _isHooked);
+        Animator.SetFloat("ClimbSpeed", _frameInput.Move.y);
+        Debug.Log("ClimbSpeed: " + _frameInput.Move.y + " IsHooked: " + _isHooked);
     }
 
     #region Collisions
