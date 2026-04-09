@@ -84,6 +84,10 @@ public class PlayerMovement : MonoBehaviour
     {
         _time += Time.deltaTime;
         GatherInput();
+        Animator.SetBool("IsJumping", !_grounded && _frameVelocity.y > 0);
+        Animator.SetBool("IsFalling", !_grounded && _frameVelocity.y < 0);
+        Animator.SetBool("IsGrounded", _grounded);
+        Animator.SetBool("IsWalking", _frameInput.Move.x != 0 && _grounded);
     }
 
 
@@ -110,14 +114,7 @@ public class PlayerMovement : MonoBehaviour
             _timeJumpWasPressed = _time;
         }
 
-        if (_frameInput.Move.x != 0)
-        {
-            Animator.SetBool("IsWalking", true);
-        }
-        else
-        {
-            Animator.SetBool("IsWalking", false);
-        }
+
     }
     private void FixedUpdate()
     {

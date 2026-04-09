@@ -239,6 +239,7 @@ MonoBehaviour:
   _ledgeClearHeight: 0.6
   _hookCooldown: 0.5
   _snapSpeed: 15
+  Animator: {fileID: 709787135}
 --- !u!70 &709787139
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -584,7 +585,7 @@ GameObject:
   - component: {fileID: 1281980223}
   - component: {fileID: 1281980222}
   - component: {fileID: 1281980221}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
