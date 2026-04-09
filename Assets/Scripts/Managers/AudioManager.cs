@@ -27,6 +27,7 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         ambienceSource.clip = snow;
+        musicSource.clip = null;
         ambienceSource.Play();
         musicSource.Play();
     }

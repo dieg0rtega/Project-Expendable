@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Player Sounds
     [SerializeField] private AudioClip[] jumpSoundClips;
-    [SerializeField] private AudioClip[] walkingSoundClips;
+    [SerializeField] private AudioClip walkingSoundClips;
     [SerializeField] private float _footstepInterval = 0.4f;
     [SerializeField] private AudioClip[] landingClips;
     private float _footstepTimer;
@@ -243,14 +243,22 @@ public class PlayerMovement : MonoBehaviour
     {
         bool isMoving = Mathf.Abs(_frameInput.Move.x) > 0.1f;
 
+        /*while (isSoundPlaying == true)
+        {
+            soundInterval -= Time.deltaTime;
+        }
+        */
         if (_grounded && isMoving)
         {
             _footstepTimer -= Time.deltaTime;
 
             if (_footstepTimer <= 0f)
             {
-                audioManager.PlayRandomSFX(walkingSoundClips);
+                audioManager.PlaySFX(audioManager.walk);
                 _footstepTimer = _footstepInterval;
+                //isSoundPlaying = true; 
+                // && soundInterval <= 0
+
             }
         }
         else

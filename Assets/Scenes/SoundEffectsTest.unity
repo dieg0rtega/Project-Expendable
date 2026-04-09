@@ -1418,7 +1418,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eb7e9288a153dba4d84dde9f251bcb6c, type: 3}
   - {fileID: 8300000, guid: 6a1c78a7e973aa347be3d1265c99ce5a, type: 3}
   - {fileID: 8300000, guid: 7de69ed3426b5154cace51b1bb4fbf52, type: 3}
-  walk: {fileID: 8300000, guid: f6e4bb240500b89469301369cc0ba201, type: 3}
+  walk: {fileID: 8300000, guid: ae3f4564701a031408c295f01f1d346d, type: 3}
   pickaxe: {fileID: 0}
   snow: {fileID: 8300000, guid: 7cb9beb04cc253c49ab26698e2e90afe, type: 3}
   cave: {fileID: 0}
@@ -3736,8 +3736,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e242d1437c4fb643a4634e618dc7cc3, type: 3}
   - {fileID: 8300000, guid: 6fa4ea2fe8490d743b631a5504f3b25d, type: 3}
   - {fileID: 8300000, guid: dd26839ac5c1e4040a4788f24000b1dd, type: 3}
-  walkingSoundClips:
-  - {fileID: 8300000, guid: f6e4bb240500b89469301369cc0ba201, type: 3}
+  walkingSoundClips: {fileID: 0}
   _footstepInterval: 0.34
   landingClips:
   - {fileID: 8300000, guid: eb7e9288a153dba4d84dde9f251bcb6c, type: 3}
