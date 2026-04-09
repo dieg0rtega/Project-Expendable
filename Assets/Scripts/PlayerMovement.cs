@@ -84,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
     {
         _time += Time.deltaTime;
         GatherInput();
-    
     }
 
 
@@ -122,13 +121,11 @@ public class PlayerMovement : MonoBehaviour
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
-        Animator.SetBool("IsJumping", !_grounded && _frameVelocity.y > 0);
-        Animator.SetBool("IsFalling", !_grounded && _frameVelocity.y < 0);
-        Animator.SetBool("IsGrounded", _grounded);
-        Animator.SetBool("IsWalking", _frameInput.Move.x != 0 && _grounded);
+
+        Animator.SetFloat("xVelocity", Math.Abs(_rb.velocity.x));
+        Animator.SetFloat("yVelocity", _rb.velocity.y);
         Animator.SetBool("IsHooked", _isHooked);
         Animator.SetFloat("ClimbSpeed", _frameInput.Move.y);
-        Debug.Log("ClimbSpeed: " + _frameInput.Move.y + " IsHooked: " + _isHooked);
     }
 
     #region Collisions
@@ -145,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Olivier Changed This
         boxSize.y -= 0.05f; // shrink slightly
+
 
         RaycastHit2D groundHit = Physics2D.CapsuleCast(
             _col.bounds.center,
@@ -202,8 +200,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
-        
 
+        Animator.SetBool("IsGrounded", _grounded);
 
 
 
