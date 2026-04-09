@@ -10,14 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7181f404f1447c0a7a17b3070b952b, type: 3}
-  m_Name: OutsideTilesProfile
+  m_Name: OutsidePlatformProfile
   m_EditorClassIdentifier: 
   m_Angles:
-  - m_Start: -180
-    m_End: 180
+  - m_Start: -45
+    m_End: 45
     m_Order: 0
     m_Sprites:
-    - {fileID: 886302673, guid: e14a2ff38de21d7419add7163230a126, type: 3}
+    - {fileID: 628075093, guid: 5c3c9420c7f60324dbb07abba5d14b0e, type: 3}
+  - m_Start: 45
+    m_End: 135
+    m_Order: 0
+    m_Sprites:
+    - {fileID: 1960254932, guid: 5c3c9420c7f60324dbb07abba5d14b0e, type: 3}
+  - m_Start: -135
+    m_End: -45
+    m_Order: 0
+    m_Sprites:
+    - {fileID: 1960254932, guid: 5c3c9420c7f60324dbb07abba5d14b0e, type: 3}
+  - m_Start: 135
+    m_End: 225
+    m_Order: 0
+    m_Sprites:
+    - {fileID: 628075093, guid: 5c3c9420c7f60324dbb07abba5d14b0e, type: 3}
   m_FillTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_CornerSprites:
   - m_CornerType: 0

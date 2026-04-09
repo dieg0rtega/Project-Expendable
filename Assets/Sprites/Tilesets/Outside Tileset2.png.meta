@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 38fe3522cf0391048b183950139f73a7
+guid: 3aa75f72ea56754428bc945b01742d74
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -95,70 +95,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Outside Tileset 1_0
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 415
-        width: 170
-        height: 140
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 0, z: 30, w: 20}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed737d3a5989b084f928b85a37f7434d
-      internalID: -1261500421
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Outside Tileset 1_1
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 245
-        width: 170
-        height: 120
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 0, z: 30, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b84613c075261944f85fb83b9b390f02
-      internalID: 718398770
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Outside Tileset 1_2
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 30
-        width: 170
-        height: 160
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 40, z: 30, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74d4c092f41382142a76d209303e56a0
-      internalID: 1868082349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -169,10 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Outside Tileset 1_0: -1261500421
-      Outside Tileset 1_1: 718398770
-      Outside Tileset 1_2: 1868082349
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
