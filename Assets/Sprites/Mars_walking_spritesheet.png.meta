@@ -168,27 +168,6 @@ TextureImporter:
       name: Mars_walking_spritesheet_2
       rect:
         serializedVersion: 2
-        x: 2276
-        y: 1147
-        width: 1138
-        height: 1146
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d3a97a9f6506f84f97fdccdcb51f5f6
-      internalID: -954931136
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mars_walking_spritesheet_3
-      rect:
-        serializedVersion: 2
         x: 0
         y: 1
         width: 1138
@@ -207,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mars_walking_spritesheet_4
+      name: Mars_walking_spritesheet_3
       rect:
         serializedVersion: 2
         x: 1141
@@ -261,9 +240,9 @@ TextureImporter:
     nameFileIdTable:
       Mars_walking_spritesheet_0: 827405725
       Mars_walking_spritesheet_1: 184766655
-      Mars_walking_spritesheet_2: -954931136
-      Mars_walking_spritesheet_3: 726865166
-      Mars_walking_spritesheet_4: -1848129469
+      Mars_walking_spritesheet_2: 726865166
+      Mars_walking_spritesheet_3: -1848129469
+      Mars_walking_spritesheet_4: -954931136
       Mars_walking_spritesheet_5: 1820916419
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
