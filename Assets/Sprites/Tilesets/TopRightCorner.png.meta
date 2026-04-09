@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c3c9420c7f60324dbb07abba5d14b0e
+guid: 5f4a8b249cf66ed4b9569e19d3c3d182
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,9 +43,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 50
@@ -95,70 +95,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: FlatPlatform
-      rect:
-        serializedVersion: 2
-        x: 230
-        y: 380
-        width: 415
-        height: 180
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 115, y: 35, z: 115, w: 35}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 739f5148bb3e3f64aa989e6f784f920b
-      internalID: 628075093
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Single
-      rect:
-        serializedVersion: 2
-        x: 15
-        y: 185
-        width: 170
-        height: 180
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 35, z: 30, w: 35}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e8863d7340eef44982ea06249b62b64
-      internalID: -1352409452
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UprightPlatform
-      rect:
-        serializedVersion: 2
-        x: 205
-        y: 145
-        width: 465
-        height: 200
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 90, y: 45, z: 90, w: 45}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f19e5edd9f41e44cb76b7ec8b98bea6
-      internalID: 1960254932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -169,10 +106,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      FlatPlatform: 628075093
-      Single: -1352409452
-      UprightPlatform: 1960254932
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
