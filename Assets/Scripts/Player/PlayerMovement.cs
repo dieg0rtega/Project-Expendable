@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _cachedQueryStartInColliders;
     private bool _isOnIce;
     private bool _facingRight = true;
+    private float _lastGroundedTime; //landing cooldown buffer
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -210,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _grounded = true;
             _justLanded = true;
+            _lastGroundedTime = Time.time;
 
             // Play landing sound ONLY if falling
             if (Mathf.Abs(_frameVelocity.y) > 5f)
@@ -231,6 +233,11 @@ public class PlayerMovement : MonoBehaviour
             GroundedChanged?.Invoke(false, 0);
         }
 
+        if (_grounded)
+        {
+            _lastGroundedTime = Time.time;
+        }
+
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
 
         Animator.SetBool("IsGrounded", _grounded);
@@ -244,14 +251,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleFootsteps()
     {
-        bool isMoving = Mathf.Abs(_frameInput.Move.x) > 0.1f;
+        bool isMoving = Mathf.Abs(_rb.velocity.x) > 0.1f;
+        bool recentlyGrounded = Time.time - _lastGroundedTime < 0.1f;
 
         /*while (isSoundPlaying == true)
         {
             soundInterval -= Time.deltaTime;
         }
         */
-        if (_grounded && isMoving)
+        if (recentlyGrounded && isMoving)
         {
             _footstepTimer -= Time.deltaTime;
 

@@ -22,12 +22,16 @@ public class LasherEnemyScript : MonoBehaviour
     private Vector3 _hitboxOriginalLocalScale;
     private Vector3 _hitboxOriginalWorldPos;
 
+    //SFX
+    AudioManager audioManager;
+
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void Update()
@@ -102,9 +106,12 @@ public class LasherEnemyScript : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, directionToPlayer, _visionRange);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
+        audioManager.PlaySFX(audioManager.lasherDetection);
+
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.gameObject == _player) return true;
+             audioManager.PlaySFX(audioManager.lasherStrike);
         }
 
         return false;
