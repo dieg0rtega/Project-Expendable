@@ -43,10 +43,8 @@ public class PlayerMovement : MonoBehaviour
     private bool _justLanded;
 
 
-
-
-
-
+    [Header("Animator")]
+    [SerializeField] private Animator Animator;
 
     private Vector2 _hookSnapTarget;
     private bool _isSnapping;
@@ -88,8 +86,7 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<CapsuleCollider2D>();
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
-       
-
+        
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
 
@@ -124,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
             HookDown = Input.GetMouseButton(0),
         };
-
+        
         if (_stats.SnapInput)
         {
             _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
@@ -137,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
             _timeJumpWasPressed = _time;
         }
 
+
     }
     private void FixedUpdate()
     {
@@ -147,7 +145,11 @@ public class PlayerMovement : MonoBehaviour
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
-        
+
+        Animator.SetFloat("xVelocity", Math.Abs(_rb.velocity.x));
+        Animator.SetFloat("yVelocity", _rb.velocity.y);
+        Animator.SetBool("IsHooked", _isHooked);
+        Animator.SetFloat("ClimbSpeed", _frameInput.Move.y);
     }
 
     #region Collisions
@@ -164,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
         //Olivier Changed This
         boxSize.y -= 0.05f; // shrink slightly
+
 
         RaycastHit2D groundHit = Physics2D.CapsuleCast(
             _col.bounds.center,
@@ -229,8 +232,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
-        
 
+        Animator.SetBool("IsGrounded", _grounded);
 
 
 
@@ -373,10 +376,6 @@ public class PlayerMovement : MonoBehaviour
 
 
         //SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
-
-
-
-
     }
 
     #endregion
@@ -547,6 +546,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsNextToWall(out RaycastHit2D wallHit, out Vector2 wallDir))
         {
+            if ((_facingRight && wallDir == Vector2.left) || (!_facingRight && wallDir == Vector2.right))
+            {
+                Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+                return;
+            }
+
             SnapToWall(wallHit, wallDir);
             _isHooked = true;
             _lastHookTime = _time;
