@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
    public GameObject pauseMenuPanel;
+   public GameObject optionsMenuPanel;
+
    private bool isPaused = false;
    
 
@@ -13,8 +15,20 @@ public class PauseMenu : MonoBehaviour
    {
      if (Input.GetKeyDown(KeyCode.Escape))
      {
-      if(isPaused) Resume();
-      else Pause();
+      if (optionsMenuPanel.activeSelf)
+      {
+         CloseOptions();
+      }
+      else if (isPaused)
+      {
+         Resume();
+      }
+      else
+      {
+         Pause();
+      }
+
+      
      }
         
    }
@@ -38,6 +52,21 @@ public class PauseMenu : MonoBehaviour
       Time.timeScale = 1f;
       SceneManager.LoadScene("Main Menu");
    }
+
+   public void OpenOptions()
+   {
+      pauseMenuPanel.SetActive(false);
+      optionsMenuPanel.SetActive(true);
+      Time.timeScale = 0f;
+   }
+
+   public void CloseOptions()
+   {
+      optionsMenuPanel.SetActive(false);
+      pauseMenuPanel.SetActive(true);
+   }
+
+
 
    public void QuitGame()
    {
