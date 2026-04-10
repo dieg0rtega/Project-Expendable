@@ -179,13 +179,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "                              Team Lead - Diego Ortega\n\n                                      
-    Programmers \n\n                 (Character) - Curt Francis, Olivier Eloy\n\n                
-    (Environment) - Olivier Eloy, Rosana Josepha,\n                                        
-    Diego Ortega \n\n                 ( UI ) - Fabianne Olmedo\n\n                
-    (Sound Design ) - Diego Ortega \n\n                                        Visual
-    Artists \n\n                            Roxanna Espinosa, Faith Baez \n\n                                            
-    Writer \n                                      Camila Amieva \n"
+  m_text: "        Team Lead - Diego Ortega\n\n        Programmers \n\n        (Character)
+    - Curt Francis, Olivier Eloy\n\n        (Environment) - Olivier Eloy, Rosana
+    Josep, Diego Ortega \n\n        ( UI ) - Fabianne Olmedo\n\n        (Sound Design
+    ) - Diego Ortega \n\n        Visual Artists-  Roxanna Espinosa, Faith Baez \n\n      
+    Writer- Camila Amieva \n\n       Attributions:\n       female heels in staircase
+    short.wav by martian --                        https://freesound.org/s/42205/
+    -- License: Creative  Commons 0\n   Brutal Impalment 2 by SilverIllusionist --
+    https://freesound.org/s/685363/ -- License: Attribution 4.0\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -194,8 +195,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4293517483
-  m_fontColor: {r: 0.6690548, g: 0.8780005, b: 0.9150943, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -248,7 +249,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -378.19507, y: 0, z: -756.40967, w: -650.61835}
+  m_margin: {x: -199.60223, y: 0, z: -1047.3431, w: -984.7597}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1135,7 +1136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36, y: -471}
+  m_AnchoredPosition: {x: 817, y: 491}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &940602355
@@ -1713,14 +1714,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4438857, g: 0.8962264, b: 0.7842526, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d08ade235b00e49ae9db5b4d3b69cf49, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 190a49d1314aa4727b14f7c7d92cc844, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
