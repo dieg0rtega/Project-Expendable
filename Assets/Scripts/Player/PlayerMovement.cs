@@ -33,6 +33,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
 
+    // Player Sounds
+    [SerializeField] private AudioClip[] jumpSoundClips;
+    [SerializeField] private AudioClip walkingSoundClips;
+    [SerializeField] private float _footstepInterval = 0.4f;
+    [SerializeField] private AudioClip[] landingClips;
+    private float _footstepTimer;
+    AudioManager audioManager;
+    private bool _justLanded;
+
+
+
+
 
 
 
@@ -75,7 +87,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _col = GetComponent<CapsuleCollider2D>();
-
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+       
 
         _cachedQueryStartInColliders = Physics2D.queriesStartInColliders;
     }
@@ -85,6 +98,19 @@ public class PlayerMovement : MonoBehaviour
     {
         _time += Time.deltaTime;
         GatherInput();
+        HandleFootsteps();
+
+        if (_justLanded)
+        {
+            if (Mathf.Abs(_frameVelocity.y) > 5f)
+            {
+                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
+                audioManager.PlayRandomSFX(landingClips, volume);
+            }
+
+            _justLanded = false;
+        }
+
     }
 
 
@@ -121,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
+        
     }
 
     #region Collisions
@@ -179,6 +206,14 @@ public class PlayerMovement : MonoBehaviour
         if (!_grounded && groundHit)
         {
             _grounded = true;
+            _justLanded = true;
+
+            // Play landing sound ONLY if falling
+            if (Mathf.Abs(_frameVelocity.y) > 5f)
+            {
+                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
+                //audioManager.PlayRandomSFX(landingClips, volume);
+            }
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _endedJumpEarly = false;
@@ -201,6 +236,35 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+
+    private void HandleFootsteps()
+    {
+        bool isMoving = Mathf.Abs(_frameInput.Move.x) > 0.1f;
+
+        /*while (isSoundPlaying == true)
+        {
+            soundInterval -= Time.deltaTime;
+        }
+        */
+        if (_grounded && isMoving)
+        {
+            _footstepTimer -= Time.deltaTime;
+
+            if (_footstepTimer <= 0f)
+            {
+                audioManager.PlaySFX(audioManager.walk);
+                _footstepTimer = _footstepInterval;
+                //isSoundPlaying = true; 
+                // && soundInterval <= 0
+
+            }
+        }
+        else
+        {
+            _footstepTimer = 0f;
+        }
     }
 
 
@@ -236,6 +300,11 @@ public class PlayerMovement : MonoBehaviour
         _coyoteUsable = false;
         _frameVelocity.y = _stats.JumpPower;
         Jumped?.Invoke();
+
+        //Plays Jump Sound
+        //SoundFXManager.instance.PlaySoundClip(jumpSoundClip, transform, 1f);
+        //SoundFXManager.instance.PlayRandomSoundClip(jumpSoundClips, transform, 1f);
+        audioManager.PlayRandomSFX(jumpSoundClips);
     }
 
     #endregion
@@ -301,6 +370,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Flip();
         }
+
+
+        //SoundFXManager.instance.PlaySoundClip(walkingSoundClips, transform, 1f);
+
+
 
 
     }
@@ -553,7 +627,7 @@ public class PlayerMovement : MonoBehaviour
      verticalSpeed * t - 0.5f * _stats.FallAcceleration * t * t
  );
 
-            // Use a GROUND layer mask here � not PlayerLayer
+            // Use a GROUND layer mask here not PlayerLayer
             RaycastHit2D hit = Physics2D.Linecast(
                 previousPoint,
                 point,
