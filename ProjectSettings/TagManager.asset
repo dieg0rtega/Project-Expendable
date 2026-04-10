@@ -9,6 +9,8 @@ TagManager:
   - Hidden
   - SlipperyIce
   - Audio
+  - Ice Pool
+  - Spikes
   layers:
   - Default
   - TransparentFX

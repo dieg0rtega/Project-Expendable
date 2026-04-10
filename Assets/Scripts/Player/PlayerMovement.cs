@@ -425,11 +425,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isHooked)
         {
+            audioManager.PlaySFX(audioManager.pickaxe);
             if (IsAtLedge(out Vector2 ledgeDir) && _frameVelocity.y > 0 && _frameInput.Move.y > 0 && !_isLedgeBoosting)
             {
                 _isLedgeBoosting = true;
                 _frameVelocity.y = _stats.JumpPower * 0.6f;
                 _frameVelocity.x = ledgeDir.x * _stats.MaxSpeed;
+             
             }
 
             if (_isLedgeBoosting)

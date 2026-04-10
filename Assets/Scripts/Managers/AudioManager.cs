@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
     [SerializeField] AudioSource ambienceSource;
+    [SerializeField] AudioSource backgroundSource;
 
 
     [Header("---Audio Clip---")]
@@ -20,20 +22,26 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] landing;
     public AudioClip walk;
     public AudioClip pickaxe;
-    public AudioClip snow;
-    public AudioClip cave;
-
+    public AudioClip ambience;
+    public AudioClip mainMenu;
+    public AudioClip background;
 
     private void Start()
     {
-        ambienceSource.clip = snow;
-        musicSource.clip = null;
+        ambienceSource.clip = ambience;
+        musicSource.clip = mainMenu;
+        backgroundSource.clip = background;
         ambienceSource.Play();
-        musicSource.Play();
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            musicSource.Play();
+        }
+        else backgroundSource.Play();
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1f, bool randomPitch = false)
     {
+        SFXSource.PlayOneShot(clip, volume);
         if (clip == null) return;
 
         if (randomPitch)
@@ -41,14 +49,16 @@ public class AudioManager : MonoBehaviour
         else
             SFXSource.pitch = 1f;
 
-        SFXSource.PlayOneShot(clip, volume);
+       
     }
 
     public void PlayRandomSFX(AudioClip[] clips, float volume = 1f)
     {
+        int rand = Random.Range(0, clips.Length);
+        
         if (clips == null || clips.Length == 0) return;
 
-        AudioClip randomClip = clips[Random.Range(0, clips.Length)];
+        AudioClip randomClip = clips[rand];
         SFXSource.PlayOneShot(randomClip, volume);
     }
 

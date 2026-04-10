@@ -21,6 +21,9 @@ public class LasherEnemyScript : MonoBehaviour
     private Vector3 _hitboxOriginalLocalPos;
     private Vector3 _hitboxOriginalLocalScale;
     private Vector3 _hitboxOriginalWorldPos;
+    private float playerDetectedtime;
+    private bool playerdetected;
+    
 
     //SFX
     AudioManager audioManager;
@@ -28,22 +31,31 @@ public class LasherEnemyScript : MonoBehaviour
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+       
     }
 
     private void Update()
     {
         bool canSee = CanSeePlayer();
+        bool recentlydetected = Time.time - playerDetectedtime == 0f;
 
-        if (canSee)
+        if (canSee && recentlydetected)
         {
+            
+            audioManager.PlaySFX(audioManager.lasherDetection);
+            Debug.Log("PlayerDetected");
             _playerSeenTimer += Time.deltaTime;
 
             if (_playerSeenTimer >= _attackDelay && !_isAttacking)
+            {
                 StartCoroutine(TentacleAttack());
+                audioManager.PlaySFX(audioManager.lasherStrike);
+
+            }
         }
         else
         {
@@ -96,6 +108,7 @@ public class LasherEnemyScript : MonoBehaviour
 
     private bool CanSeePlayer()
     {
+        playerDetectedtime = Time.time;
         Vector2 directionToPlayer = (_player.transform.position - transform.position).normalized;
 
         float angle = Vector2.Angle(_facingDirection, directionToPlayer);
@@ -106,12 +119,13 @@ public class LasherEnemyScript : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, directionToPlayer, _visionRange);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-        audioManager.PlaySFX(audioManager.lasherDetection);
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.collider.gameObject == _player) return true;
-             audioManager.PlaySFX(audioManager.lasherStrike);
+            if (hit.collider.gameObject == _player)
+            
+                return true;
+           
         }
 
         return false;
