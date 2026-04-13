@@ -33,6 +33,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
+    [SerializeField] private float _climbSoundInterval = 0.25f;
+    private float _climbSoundTimer;
+    
 
     // Player Sounds
     [SerializeField] private AudioClip[] jumpSoundClips;
@@ -425,8 +428,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isHooked)
         {
-            audioManager.PlaySFX(audioManager.pickaxe);
-            if (IsAtLedge(out Vector2 ledgeDir) && _frameVelocity.y > 0 && _frameInput.Move.y > 0 && !_isLedgeBoosting)
+            bool isClimbingUp = _frameInput.Move.y > 0.1f;
+
+            if (isClimbingUp)
+            {
+                audioManager.PlayLoop(audioManager.pickaxe);
+            }
+            else
+            {
+                audioManager.StopLoop();
+            }
+        }
+        else
+        {
+            audioManager.StopLoop();
+        }
+        if (IsAtLedge(out Vector2 ledgeDir) && _frameVelocity.y > 0 && _frameInput.Move.y > 0 && !_isLedgeBoosting)
             {
                 _isLedgeBoosting = true;
                 _frameVelocity.y = _stats.JumpPower * 0.6f;
@@ -472,12 +489,13 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            // Release after max duration
-            if (_time >= _hookEndTime)
-                _isHooked = false;
+        // Release after max duration
+        if (_time >= _hookEndTime)
+        {
+            _isHooked = false;
             _lastHookTime = _time;
-
         }
+       
     }
 
     private bool IsAtLedge(out Vector2 wallDir)

@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource SFXSource;
     [SerializeField] AudioSource ambienceSource;
     [SerializeField] AudioSource backgroundSource;
+    [SerializeField] AudioSource loopSource;
 
 
     [Header("---Audio Clip---")]
@@ -26,6 +27,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip mainMenu;
     public AudioClip background;
 
+
     private void Start()
     {
         ambienceSource.clip = ambience;
@@ -39,6 +41,29 @@ public class AudioManager : MonoBehaviour
         else backgroundSource.Play();
     }
 
+    public bool IsPlaying()
+    {
+        return SFXSource.isPlaying;
+    }
+
+
+
+    public void PlayLoop(AudioClip clip)
+    {
+        if (loopSource.clip == clip && loopSource.isPlaying) return;
+
+        loopSource.clip = clip;
+        loopSource.loop = true;
+        loopSource.Play();
+    }
+
+    public void StopLoop()
+    {
+        loopSource.Stop();
+    }
+
+
+
     public void PlaySFX(AudioClip clip, float volume = 1f, bool randomPitch = false)
     {
         SFXSource.PlayOneShot(clip, volume);
@@ -49,13 +74,13 @@ public class AudioManager : MonoBehaviour
         else
             SFXSource.pitch = 1f;
 
-       
+
     }
 
     public void PlayRandomSFX(AudioClip[] clips, float volume = 1f)
     {
         int rand = Random.Range(0, clips.Length);
-        
+
         if (clips == null || clips.Length == 0) return;
 
         AudioClip randomClip = clips[rand];
