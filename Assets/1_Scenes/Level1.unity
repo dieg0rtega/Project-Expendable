@@ -15279,6 +15279,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3737403058056262014, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
+      propertyPath: ambience
+      value: 
+      objectReference: {fileID: 8300000, guid: 7cb9beb04cc253c49ab26698e2e90afe, type: 3}
+    - target: {fileID: 3737403058056262014, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
+      propertyPath: mainMenu
+      value: 
+      objectReference: {fileID: 8300000, guid: 2094cf6d301a47c47955397c6b3ab35e, type: 3}
+    - target: {fileID: 3737403058056262014, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
       propertyPath: background
       value: 
       objectReference: {fileID: 8300000, guid: 7cee607c5cc15ec4aa8da518181fec9e, type: 3}

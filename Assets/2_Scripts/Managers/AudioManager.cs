@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class SceneAudio
+    {
+        public string sceneName;
+        public AudioClip music;
+        public AudioClip ambience;
+    }
+
+    [SerializeField] private SceneAudio[] sceneAudios;
+
     [Header("---Audio Source---")]
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource SFXSource;
@@ -28,17 +38,46 @@ public class AudioManager : MonoBehaviour
     public AudioClip background;
 
 
-    private void Start()
+
+
+
+   /* private void Start()
     {
         ambienceSource.clip = ambience;
+        ambienceSource.loop = true;
+
         musicSource.clip = mainMenu;
+        musicSource.loop = true;
+
         backgroundSource.clip = background;
+        backgroundSource.loop = true;
+
+        
+        loopSource.loop = true;
+
         ambienceSource.Play();
-        if (SceneManager.GetActiveScene().name == "Main Menu")
+    }*/
+
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        foreach (var entry in sceneAudios)
         {
-            musicSource.Play();
+            if (entry.sceneName == scene.name)
+            {
+                PlayMusic(entry.music);
+                PlayAmbience(entry.ambience);
+                return;
+            }
         }
-        else backgroundSource.Play();
+
+        Debug.LogWarning("No audio assigned for scene: " + scene.name);
     }
 
     public bool IsPlaying()
@@ -47,6 +86,27 @@ public class AudioManager : MonoBehaviour
     }
 
 
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (clip == null) return;
+        if (musicSource.clip == clip && musicSource.isPlaying) return;
+
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+
+
+    public void PlayAmbience(AudioClip clip)
+    {
+        if (clip == null) return;
+        if (ambienceSource.clip == clip && ambienceSource.isPlaying) return;
+
+        ambienceSource.clip = clip;
+        ambienceSource.loop = true;
+        ambienceSource.Play();
+    }
 
     public void PlayLoop(AudioClip clip)
     {
@@ -60,13 +120,13 @@ public class AudioManager : MonoBehaviour
     public void StopLoop()
     {
         loopSource.Stop();
-    }
-
+    }  
+    
 
 
     public void PlaySFX(AudioClip clip, float volume = 1f, bool randomPitch = false)
     {
-        SFXSource.PlayOneShot(clip, volume);
+        
         if (clip == null) return;
 
         if (randomPitch)
@@ -74,7 +134,7 @@ public class AudioManager : MonoBehaviour
         else
             SFXSource.pitch = 1f;
 
-
+        SFXSource.PlayOneShot(clip, volume);
     }
 
     public void PlayRandomSFX(AudioClip[] clips, float volume = 1f)
@@ -88,3 +148,4 @@ public class AudioManager : MonoBehaviour
     }
 
 }
+
