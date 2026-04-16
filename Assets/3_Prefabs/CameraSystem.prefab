@@ -311,20 +311,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 842651685695982725}
     m_ColliderPaths:
-    - - X: 500000000
+    - - X: 712787392
         Y: 500000000
-      - X: -500000000
+      - X: -93930664
         Y: 500000000
-      - X: -500000000
-        Y: -500000000
-      - X: 500000000
-        Y: -500000000
+      - X: -93930664
+        Y: -236937632
+      - X: 712787392
+        Y: -236937632
   m_CompositePaths:
     m_Paths:
-    - - {x: 49.999973, y: -50}
-      - {x: 49.999973, y: 50}
-      - {x: -50, y: 49.999973}
-      - {x: -49.999973, y: -50}
+    - - {x: 71.27871, y: -23.693764}
+      - {x: 71.27871, y: 50}
+      - {x: -9.393066, y: 49.999973}
+      - {x: -9.393037, y: -23.693764}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -361,7 +361,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 1
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 30.942837, y: 13.153117}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -372,7 +372,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 80.67181, y: 73.69376}
   m_EdgeRadius: 0
 --- !u!1 &8894218049798835322
 GameObject:
@@ -404,7 +404,7 @@ Transform:
   m_GameObject: {fileID: 8894218049798835322}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.9999998, z: -10}
+  m_LocalPosition: {x: 40.13, y: 3.5899997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
