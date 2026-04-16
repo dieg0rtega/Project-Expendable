@@ -312,6 +312,7 @@ MonoBehaviour:
   myMixer: {fileID: 24100000, guid: 2c0ccd64c466e4ea8a386dffc222047b, type: 2}
   musicSlider: {fileID: 2964032220662726599}
   SFXSlider: {fileID: 2187189018269499022}
+  masterSlider: {fileID: 246453761486553213}
 --- !u!1 &975255978941001881
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +794,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3231774984784190772}
+        m_TargetAssemblyTypeName: OptionsSubScript, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3218967331740364300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1916,7 +1929,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3231774984784190772}
+        m_TargetAssemblyTypeName: OptionsSubScript, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6204438497407360150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2031,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3231774984784190772}
+        m_TargetAssemblyTypeName: OptionsSubScript, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6237091156001337648
 GameObject:
   m_ObjectHideFlags: 0

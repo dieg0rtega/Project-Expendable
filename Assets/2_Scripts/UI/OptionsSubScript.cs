@@ -9,18 +9,20 @@ public class OptionsSubScript : MonoBehaviour
 
 [SerializeField] private AudioMixer myMixer;
 [SerializeField] private Slider musicSlider; 
-[SerializeField] private Slider SFXSlider; 
+[SerializeField] private Slider SFXSlider;
+[SerializeField] private Slider masterSlider;
 
-private void Start()
+    private void Start()
 {
-    if(PlayerPrefs.HasKey("musicVolume"))
+    if(PlayerPrefs.HasKey("musicVolume") && PlayerPrefs.HasKey("SFXVolume") && PlayerPrefs.HasKey("MasterVolume"))
     {
         LoadVolume();
     }
     else{
         SetMusicVolume();
         SetSFXVolume();
-    }
+        SetMasterVolume();
+        }
 }
 
 // Adjusting Vol.
@@ -41,13 +43,23 @@ public void SetSFXVolume()
 
 }
 
-private void LoadVolume()
+
+    public void SetMasterVolume()
+    {
+        float volume = masterSlider.value;
+        myMixer.SetFloat("Master", Mathf.Log10(Mathf.Max(0.0001f, volume)) * 20);
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+    }
+
+    private void LoadVolume()
 {
     musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
     SFXSlider.value = PlayerPrefs.GetFloat("SFXVolume");
-    
-    SetMusicVolume();
-    SetSFXVolume();
+    masterSlider.value = PlayerPrefs.GetFloat("MasterVolume");
+
+        SetMusicVolume();
+        SetSFXVolume();
+        SetMasterVolume();
 
 }
 
