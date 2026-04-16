@@ -12,6 +12,7 @@ public class LasherEnemyScript : MonoBehaviour
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _visionBlockingLayers;
     [SerializeField] private GameObject _hitbox;
+    [SerializeField] private GameObject _TileMesh;
     [SerializeField] private Vector2 _facingDirection = Vector2.right;
     [SerializeField] private float _detectionAngle = 20f;
 
@@ -21,13 +22,16 @@ public class LasherEnemyScript : MonoBehaviour
     private Vector3 _hitboxOriginalLocalPos;
     private Vector3 _hitboxOriginalLocalScale;
     private Vector3 _hitboxOriginalWorldPos;
-
+    private SpriteRenderer _hitboxRenderer;
+    private BoxCollider2D _hitboxCollider;
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
+        _hitboxCollider = _hitbox.GetComponent<BoxCollider2D>();
+        _hitboxRenderer = _TileMesh.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -63,8 +67,9 @@ public class LasherEnemyScript : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            float currentScale = Mathf.Lerp(0f, _maxExtendDistance, t);
-            _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
+            float currentSize = Mathf.Lerp(0f, _maxExtendDistance, t);
+            _hitboxRenderer.size = new Vector2(currentSize, _hitboxRenderer.size.y);
+            _hitboxCollider.size = new Vector2(currentSize, _hitboxCollider.size.y);
             yield return null;
         }
 
@@ -77,8 +82,9 @@ public class LasherEnemyScript : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            float currentScale = Mathf.Lerp(_maxExtendDistance, 0f, t);
-            _hitbox.transform.localScale = new Vector3(currentScale, _hitboxOriginalLocalScale.y, 1f);
+            float currentSize = Mathf.Lerp(_maxExtendDistance, 0f, t);
+            _hitboxRenderer.size = new Vector2(currentSize, _hitboxRenderer.size.y);
+            _hitboxCollider.size = new Vector2(currentSize, _hitboxCollider.size.y);
             yield return null;
         }
 
@@ -86,7 +92,8 @@ public class LasherEnemyScript : MonoBehaviour
         _hitbox.transform.localPosition = _hitboxOriginalLocalPos;
         _hitbox.transform.localScale = _hitboxOriginalLocalScale;
         _hitbox.transform.localRotation = Quaternion.identity;
-
+        _hitboxRenderer.size = new Vector2(0f, _hitboxRenderer.size.y);
+        _hitboxCollider.size = new Vector2(0f, _hitboxCollider.size.y);
         _isAttacking = false;
     }
 
