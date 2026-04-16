@@ -37,27 +37,27 @@ MonoBehaviour:
   m_CornerSprites:
   - m_CornerType: 0
     m_Sprites:
-    - {fileID: 21300000, guid: dd95fe59a91286447895f0d89244b3a2, type: 3}
+    - {fileID: 0}
   - m_CornerType: 1
     m_Sprites:
-    - {fileID: 21300000, guid: 5f4a8b249cf66ed4b9569e19d3c3d182, type: 3}
+    - {fileID: 0}
   - m_CornerType: 2
     m_Sprites:
-    - {fileID: 21300000, guid: f126044f41f5d3e409d0a20ea66199c5, type: 3}
+    - {fileID: 0}
   - m_CornerType: 3
     m_Sprites:
-    - {fileID: 21300000, guid: 96da8f7fa00ce774eb6897e00fe45aa3, type: 3}
+    - {fileID: 0}
   - m_CornerType: 4
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 5
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 6
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 7
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   m_FillOffset: 0
   m_UseSpriteBorders: 1
