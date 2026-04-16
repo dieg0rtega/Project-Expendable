@@ -70,6 +70,7 @@ public class LasherEnemyScript : MonoBehaviour
             float currentSize = Mathf.Lerp(0f, _maxExtendDistance, t);
             _hitboxRenderer.size = new Vector2(currentSize, _hitboxRenderer.size.y);
             _hitboxCollider.size = new Vector2(currentSize, _hitboxCollider.size.y);
+            _hitboxCollider.offset = new Vector2(currentSize / 2f, 0f);
             yield return null;
         }
 
@@ -85,6 +86,7 @@ public class LasherEnemyScript : MonoBehaviour
             float currentSize = Mathf.Lerp(_maxExtendDistance, 0f, t);
             _hitboxRenderer.size = new Vector2(currentSize, _hitboxRenderer.size.y);
             _hitboxCollider.size = new Vector2(currentSize, _hitboxCollider.size.y);
+            _hitboxCollider.offset = new Vector2(currentSize / 2f, 0f);
             yield return null;
         }
 
@@ -94,6 +96,7 @@ public class LasherEnemyScript : MonoBehaviour
         _hitbox.transform.localRotation = Quaternion.identity;
         _hitboxRenderer.size = new Vector2(0f, _hitboxRenderer.size.y);
         _hitboxCollider.size = new Vector2(0f, _hitboxCollider.size.y);
+        _hitboxCollider.offset = Vector2.zero;
         _isAttacking = false;
     }
 
