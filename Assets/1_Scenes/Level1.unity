@@ -2231,6 +2231,26 @@ PrefabInstance:
       propertyPath: flavorText
       value: This is flavor text #1
       objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[0].text
+      value: Hi there!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[1].text
+      value: Hey!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[0].speaker
+      value: Mars
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[1].speaker
+      value: Blue
+      objectReference: {fileID: 0}
     - target: {fileID: 2814009449151502022, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
       propertyPath: m_Name
       value: CollectibleItem
@@ -10591,6 +10611,26 @@ PrefabInstance:
     - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
       propertyPath: flavorText
       value: This is flavor text #2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[0].text
+      value: Hi there!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[1].text
+      value: This is a test.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[0].speaker
+      value: Mars
+      objectReference: {fileID: 0}
+    - target: {fileID: 1199390442908251436, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
+      propertyPath: dialogueLines.Array.data[1].speaker
+      value: Blue
       objectReference: {fileID: 0}
     - target: {fileID: 2814009449151502022, guid: e20631cd1f1624d4785fddc3eb45725d, type: 3}
       propertyPath: m_Name

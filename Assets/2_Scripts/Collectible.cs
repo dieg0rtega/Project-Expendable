@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    public string flavorText;
+    public List<DialogueLine> dialogueLines;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +15,7 @@ public class Collectible : MonoBehaviour
 
             if (ui != null)
             {
-                ui.Show(flavorText);
+                ui.Show(dialogueLines);
             }
 
             
