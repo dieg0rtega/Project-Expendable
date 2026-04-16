@@ -282,7 +282,7 @@ Transform:
   m_GameObject: {fileID: 5713110802101463227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 22.832466, y: -0.37881708, z: 445.93942}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -700,17 +700,11 @@ MonoBehaviour:
     music: {fileID: 8300000, guid: 298a34ba8880a13408cc0fd227323382, type: 3}
     ambience: {fileID: 8300000, guid: 7cb9beb04cc253c49ab26698e2e90afe, type: 3}
   - sceneName: Level2
-    music: {fileID: 0}
+    music: {fileID: 8300000, guid: 298a34ba8880a13408cc0fd227323382, type: 3}
     ambience: {fileID: 8300000, guid: 2dac33e4ccdba874fab60971e79b7be4, type: 3}
   - sceneName: Level3
-    music: {fileID: 0}
+    music: {fileID: 8300000, guid: 298a34ba8880a13408cc0fd227323382, type: 3}
     ambience: {fileID: 8300000, guid: 2dac33e4ccdba874fab60971e79b7be4, type: 3}
-  - sceneName: 
-    music: {fileID: 0}
-    ambience: {fileID: 0}
-  - sceneName: 
-    music: {fileID: 0}
-    ambience: {fileID: 0}
   musicSource: {fileID: 5160206399311024750}
   SFXSource: {fileID: 604230812938174894}
   ambienceSource: {fileID: 38786201208513293}
