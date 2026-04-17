@@ -15,9 +15,18 @@ EditorBuildSettings:
     path: Assets/1_Scenes/Level1.unity
     guid: f501ac6de8e225c479e286030f13902b
   - enabled: 1
+    path: Assets/1_Scenes/BlueEncounter.unity
+    guid: 80c5322d54043104297b82cf2305d557
+  - enabled: 1
     path: Assets/1_Scenes/Level2.unity
     guid: 5eac4e4c73698c2479067dd54e3cce82
   - enabled: 1
+    path: Assets/1_Scenes/Flashback1.unity
+    guid: 61d916c116d85a14d9b7df0e94010b3f
+  - enabled: 1
     path: Assets/1_Scenes/Level3.unity
     guid: e58aa272c69a23d40a58669d3d2d3f7f
+  - enabled: 1
+    path: Assets/1_Scenes/Flashback2.unity
+    guid: 5232fbafcb5e1f34584877ad540da4ae
   m_configObjects: {}

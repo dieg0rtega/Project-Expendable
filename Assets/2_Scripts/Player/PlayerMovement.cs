@@ -221,7 +221,7 @@ public class PlayerMovement : MonoBehaviour
             _grounded = true;
             _lastGroundedTime = Time.time;
 
-            if (Mathf.Abs(_frameVelocity.y) > 5f)
+            if (Mathf.Abs(_frameVelocity.y) > 10f)
             {
                 audioManager.PlayRandomSFX(landingClips);
             }
