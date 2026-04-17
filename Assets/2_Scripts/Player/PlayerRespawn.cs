@@ -28,7 +28,14 @@ public class PlayerRespawn : MonoBehaviour
         if (other.CompareTag("Hazard"))
         {
             StartCoroutine(Respawn());
-            audioManager.PlaySFX(audioManager.spike);
+            if (other.name.Contains("Spike"))
+            {
+                audioManager.PlaySFX(audioManager.spike);
+            } else if (other.name.Contains("IcePool"))
+            {
+                audioManager.PlaySFX(audioManager.icePool);
+            }
+
         }
     }
 
@@ -39,7 +46,14 @@ public class PlayerRespawn : MonoBehaviour
         if (other.collider.CompareTag("Hazard"))
         {
             StartCoroutine(Respawn());
-            audioManager.PlaySFX(audioManager.icePool);
+            if (other.collider.name.Contains("Spike"))
+            {
+                audioManager.PlaySFX(audioManager.spike);
+            }
+            else if (other.collider.name.Contains("IcePool"))
+            {
+                audioManager.PlaySFX(audioManager.icePool);
+            }
         }
     }
 

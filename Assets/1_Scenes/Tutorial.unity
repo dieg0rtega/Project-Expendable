@@ -1171,6 +1171,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 933867424246049448, guid: fb64c3a0184e95147aac56386fc401d6, type: 3}
+      propertyPath: _hookCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2111362038015458343, guid: fb64c3a0184e95147aac56386fc401d6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1218,10 +1222,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8960391628792776329, guid: fb64c3a0184e95147aac56386fc401d6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1737278096}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb64c3a0184e95147aac56386fc401d6, type: 3}
 --- !u!4 &215867779 stripped
 Transform:
@@ -1274,6 +1275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &250469131
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1323,7 +1325,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &266533742
@@ -1466,6 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.7
+  followY: 0
 --- !u!1 &302499145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &461252622
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1734,7 +1738,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &464031537
@@ -2083,6 +2087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.85
+  followY: 0
 --- !u!1001 &535214127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2138,17 +2143,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2737476048195411733, guid: 0225f43198601e047aeda963b8946c7c, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6848760366947855906, guid: 0225f43198601e047aeda963b8946c7c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2514285879603237107}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0225f43198601e047aeda963b8946c7c, type: 3}
---- !u!4 &535214128 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6848760366947855906, guid: 0225f43198601e047aeda963b8946c7c, type: 3}
-  m_PrefabInstance: {fileID: 535214127}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &551480412
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,6 +3368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &985623768
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3420,7 +3418,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1002656610
@@ -4179,6 +4177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &1097264483
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4228,7 +4227,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1124226841
@@ -5054,6 +5053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &1292010377
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5103,7 +5103,7 @@ SpriteRenderer:
   m_Size: {x: 13.68, y: 10.26}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1299148913
@@ -6083,6 +6083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.99
+  followY: 0
 --- !u!1 &1320242441
 GameObject:
   m_ObjectHideFlags: 0
@@ -7135,6 +7136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &1516648056
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7184,7 +7186,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1518693435
@@ -8423,6 +8425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &1805117723
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8472,7 +8475,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1837487414
@@ -8521,6 +8524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.4
+  followY: 0
 --- !u!212 &1837487417
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8570,7 +8574,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1871788548
@@ -8834,6 +8838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.9
+  followY: 0
 --- !u!1 &1997057140
 GameObject:
   m_ObjectHideFlags: 0
@@ -8887,6 +8892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.95
+  followY: 0
 --- !u!1 &2001381780
 GameObject:
   m_ObjectHideFlags: 0
@@ -9319,6 +9325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.99
+  followY: 0
 --- !u!1 &2046636518
 GameObject:
   m_ObjectHideFlags: 0
@@ -9877,68 +9884,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &2514285879603237106
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 535214128}
-    m_Modifications:
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.7991147
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.32280564
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.14009531
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8946198644121868768, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-      propertyPath: m_Name
-      value: Sound Manager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
---- !u!4 &2514285879603237107 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1610128815520665113, guid: 86071f82c0093214aa1d07386c82ca27, type: 3}
-  m_PrefabInstance: {fileID: 2514285879603237106}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8071819432771785750
 PrefabInstance:
   m_ObjectHideFlags: 0
