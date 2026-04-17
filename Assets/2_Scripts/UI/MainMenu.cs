@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
    public GameObject mainMenuPanel;
    public GameObject optionsMenuPanel;
    public GameObject messagePanel; 
+   public GameObject attributionPanel;
    
 
    public Toggle fullscreenToggle;
@@ -48,6 +49,19 @@ public class MainMenu : MonoBehaviour
       messagePanel.SetActive(false);
       mainMenuPanel.SetActive(true);
    }
+
+   public void openAttributes()
+   {
+      attributionPanel.SetActive(true);
+      messagePanel.SetActive(false);
+   }
+
+   public void closeAttributes()
+   {
+      attributionPanel.SetActive(false);
+      messagePanel.SetActive(true);
+   }
+   
 
 
 
