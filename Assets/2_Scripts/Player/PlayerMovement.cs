@@ -451,6 +451,12 @@ public class PlayerMovement : MonoBehaviour
                 _isHooked = false;
                 return;
             }
+
+            if (IsAtLedge(out Vector2 ledgeDir) && _frameInput.Move.y > 0)
+            {
+                _frameInput.Move.y = 0;
+            }
+
             _frameVelocity.x = 0f;
             _frameVelocity.y = _frameInput.Move.y * (_stats.MaxSpeed * 0.7f);
 
@@ -479,7 +485,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 bottom = new Vector2(center.x, _col.bounds.min.y + 0.3f);
         Vector2 top = new Vector2(center.x, _col.bounds.max.y - 0.1f);
 
-        Vector2[] origins = { bottom, center, top };
+        Vector2[] origins = { center };
         foreach (var origin in origins)
         {
             RaycastHit2D rightHit = Physics2D.Raycast(origin, Vector2.right, _hookRange, hookMask);
@@ -539,6 +545,33 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
+    }
+
+    private bool IsAtLedge(out Vector2 wallDir)
+    {
+        LayerMask hookMask = _stats.GroundLayer;
+        Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
+        RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
+        RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
+
+        Vector2 top = new Vector2(_col.bounds.center.x, _col.bounds.max.y + 0.05f);
+        RaycastHit2D topRight = Physics2D.Raycast(top, Vector2.right, _hookRange, hookMask);
+        RaycastHit2D topLeft = Physics2D.Raycast(top, Vector2.left, _hookRange, hookMask);
+
+        if (bottomRight.collider != null && topRight.collider == null)
+        {
+            wallDir = Vector2.right;
+            return true;
+        }
+        if (bottomLeft.collider != null && topLeft.collider == null)
+        {
+            wallDir = Vector2.left;
+            return true;
+        }
+
+        wallDir = default;
+        return false;
+
     }
 
 
