@@ -694,7 +694,7 @@ MonoBehaviour:
     music: {fileID: 8300000, guid: 2094cf6d301a47c47955397c6b3ab35e, type: 3}
     ambience: {fileID: 0}
   - sceneName: Tutorial
-    music: {fileID: 8300000, guid: 298a34ba8880a13408cc0fd227323382, type: 3}
+    music: {fileID: 8300000, guid: d84fd7e6194c19944959ff83165bcbd6, type: 3}
     ambience: {fileID: 8300000, guid: 7cb9beb04cc253c49ab26698e2e90afe, type: 3}
   - sceneName: Level1
     music: {fileID: 8300000, guid: 298a34ba8880a13408cc0fd227323382, type: 3}
