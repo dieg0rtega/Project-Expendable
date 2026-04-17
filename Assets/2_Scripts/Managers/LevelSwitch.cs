@@ -19,6 +19,7 @@ public class LevelSwitch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        fadeImageObject = GameObject.Find("Level Fade");
         imageComponent = fadeImageObject.GetComponent<Image>();
         StartCoroutine(SceneController.instance.SetTransparency(imageComponent, visibilityOnEnd));
         StartCoroutine(SceneController.instance.LevelFade(imageComponent, visibilityOnStart, fadeDuration, Update));
