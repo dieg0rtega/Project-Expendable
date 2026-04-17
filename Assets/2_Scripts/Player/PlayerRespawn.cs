@@ -6,16 +6,19 @@ using UnityEngine.SceneManagement;
 public class PlayerRespawn : MonoBehaviour
 {
     [SerializeField] private Vector2 _respawnPoint = Vector2.zero;
-    [SerializeField] private float _respawnDelay = 1f;
+    [SerializeField] private float _respawnDelay = 10f;
 
     private PlayerMovement _controller;
     private Rigidbody2D _rb;
     private bool _isDead;
 
+    AudioManager audioManager;
+
     private void Awake()
     {
         _controller = GetComponent<PlayerMovement>();
         _rb = GetComponent<Rigidbody2D>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,6 +28,7 @@ public class PlayerRespawn : MonoBehaviour
         if (other.CompareTag("Hazard"))
         {
             StartCoroutine(Respawn());
+            audioManager.PlaySFX(audioManager.spike);
         }
     }
 
@@ -35,6 +39,7 @@ public class PlayerRespawn : MonoBehaviour
         if (other.collider.CompareTag("Hazard"))
         {
             StartCoroutine(Respawn());
+            audioManager.PlaySFX(audioManager.icePool);
         }
     }
 

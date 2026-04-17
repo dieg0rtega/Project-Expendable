@@ -24,32 +24,70 @@ public class LasherEnemyScript : MonoBehaviour
     private Vector3 _hitboxOriginalWorldPos;
     private SpriteRenderer _hitboxRenderer;
     private BoxCollider2D _hitboxCollider;
+    private bool _hasDetectedPlayer = false;
+
+    //SFX
+    AudioManager audioManager;
+
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
         _hitboxCollider = _hitbox.GetComponent<BoxCollider2D>();
         _hitboxRenderer = _TileMesh.GetComponent<SpriteRenderer>();
+
     }
 
     private void Update()
     {
         bool canSee = CanSeePlayer();
 
-        if (canSee)
+        if (canSee && !_hasDetectedPlayer)
         {
-            _playerSeenTimer += Time.deltaTime;
-
-            if (_playerSeenTimer >= _attackDelay && !_isAttacking)
-                StartCoroutine(TentacleAttack());
+            _hasDetectedPlayer = true;
+            audioManager.PlaySFX(audioManager.lasherDetection);
+            Debug.Log("Detect Trigger");
         }
-        else
+
+        if (!canSee)
         {
+            _hasDetectedPlayer = false;
             _playerSeenTimer = 0f;
+            return;
+        }
+
+        _playerSeenTimer += Time.deltaTime;
+
+        if (_playerSeenTimer >= _attackDelay && !_isAttacking)
+        {
+            StartCoroutine(TentacleAttack());
+            StartCoroutine(PlayStrikeSoundDelayed()); 
         }
     }
+
+
+    IEnumerator AttackWithDelay()
+    {
+        _isAttacking = true;
+
+        // Wait until detection sound finishes
+        while (audioManager.IsPlaying())
+            yield return null;
+
+        audioManager.PlaySFX(audioManager.lasherStrike);
+
+        yield return StartCoroutine(TentacleAttack());
+    }
+
+    IEnumerator PlayStrikeSoundDelayed()
+    {
+        yield return new WaitForSeconds(0.1f); // tweak this
+        audioManager.PlaySFX(audioManager.lasherStrike);
+    }
+
 
     private IEnumerator TentacleAttack()
     {
@@ -102,6 +140,7 @@ public class LasherEnemyScript : MonoBehaviour
 
     private bool CanSeePlayer()
     {
+
         Vector2 directionToPlayer = (_player.transform.position - transform.position).normalized;
 
         float angle = Vector2.Angle(_facingDirection, directionToPlayer);
@@ -112,9 +151,13 @@ public class LasherEnemyScript : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(rayOrigin, directionToPlayer, _visionRange);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
+
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.collider.gameObject == _player) return true;
+            if (hit.collider.gameObject == _player)
+
+                return true;
+
         }
 
         return false;

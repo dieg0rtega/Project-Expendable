@@ -2165,6 +2165,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3231774984784190772, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
+      propertyPath: masterSlider
+      value: 
+      objectReference: {fileID: 4985395054736154630}
     - target: {fileID: 3322318946820321731, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2319,6 +2323,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 424400840947068615, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
   m_PrefabInstance: {fileID: 5063235655371235451}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4985395054736154630 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 246453761486553213, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
+  m_PrefabInstance: {fileID: 5063235655371235451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7520735925680787896 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3322318946820321731, guid: a49bdbd62b14c40808d97107470880c0, type: 3}

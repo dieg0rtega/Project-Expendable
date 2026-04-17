@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _cachedQueryStartInColliders;
     private bool _isOnIce;
     private bool _facingRight = true;
+    private float _lastGroundedTime; //landing cooldown buffer
 
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
@@ -32,13 +33,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
+    [SerializeField] private float _climbSoundInterval = 0.25f;
+    private float _climbSoundTimer;
+    
 
     // Player Sounds
     [SerializeField] private AudioClip[] jumpSoundClips;
     [SerializeField] private AudioClip walkingSoundClips;
     [SerializeField] private float _footstepInterval = 0.4f;
+    [SerializeField] private float _climbInterval = 0.3f;
     [SerializeField] private AudioClip[] landingClips;
     private float _footstepTimer;
+    private float _climbTimer;
     AudioManager audioManager;
     private bool _justLanded;
 
@@ -111,18 +117,6 @@ public class PlayerMovement : MonoBehaviour
         _time += Time.deltaTime;
         GatherInput();
         HandleFootsteps();
-
-        if (_justLanded)
-        {
-            if (Mathf.Abs(_frameVelocity.y) > 5f)
-            {
-                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
-                audioManager.PlayRandomSFX(landingClips, volume);
-            }
-
-            _justLanded = false;
-        }
-
     }
 
 
@@ -225,14 +219,13 @@ public class PlayerMovement : MonoBehaviour
         if (!_grounded && groundHit)
         {
             _grounded = true;
-            _justLanded = true;
+            _lastGroundedTime = Time.time;
 
-            // Play landing sound ONLY if falling
             if (Mathf.Abs(_frameVelocity.y) > 5f)
             {
-                float volume = Mathf.Clamp01(Mathf.Abs(_frameVelocity.y) / 20f);
-                //audioManager.PlayRandomSFX(landingClips, volume);
+                audioManager.PlayRandomSFX(landingClips);
             }
+            
             _coyoteUsable = true;
             _bufferedJumpUsable = true;
             _endedJumpEarly = false;
@@ -245,6 +238,11 @@ public class PlayerMovement : MonoBehaviour
             _frameLeftGrounded = _time;
 
             GroundedChanged?.Invoke(false, 0);
+        }
+
+        if (_grounded)
+        {
+            _lastGroundedTime = Time.time;
         }
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
@@ -260,14 +258,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleFootsteps()
     {
-        bool isMoving = Mathf.Abs(_frameInput.Move.x) > 0.1f;
+        bool isMoving = Mathf.Abs(_rb.velocity.x) > 0.1f;
+        bool recentlyGrounded = Time.time - _lastGroundedTime < 0.1f;
 
         /*while (isSoundPlaying == true)
         {
             soundInterval -= Time.deltaTime;
         }
         */
-        if (_grounded && isMoving)
+        if (recentlyGrounded && isMoving)
         {
             _footstepTimer -= Time.deltaTime;
 
@@ -433,6 +432,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isHooked)
         {
+            
+            if (_frameInput.Move.y != 0f)
+            {
+                _climbTimer -= Time.deltaTime;
+
+                if (_climbTimer <= 0f)
+                {
+
+                    audioManager.PlaySFX(audioManager.pickaxe);
+                    _climbTimer = _climbInterval;
+
+                }
+            }
+            else
+            {
+                _climbTimer = 0f;
+            }
 
             if (_isSnapping)
             {
@@ -470,10 +486,11 @@ public class PlayerMovement : MonoBehaviour
 
             // Release after max duration
             if (_time >= _hookEndTime)
+            {
                 _isHooked = false;
-            _lastHookTime = _time;
-
-        }
+                _lastHookTime = _time;
+            }
+        }  
     }
 
     
