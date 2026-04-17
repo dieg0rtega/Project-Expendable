@@ -44,7 +44,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -80,7 +80,7 @@ SpriteShapeRenderer:
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Sprites:
-  - {fileID: 21300000, guid: 0ae2b74b1edd14bb18dd7b65ae916a54, type: 3}
+  - {fileID: 21300000, guid: 026950d171bde1e49bd6df874ab6e491, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
@@ -91,7 +91,7 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 1.2500001, y: 1.2500001, z: 0}
+    m_Extent: {x: 1.6974025, y: 1.6974025, z: 0}
   m_SpriteSortPoint: 0
 --- !u!114 &1822819623833810990
 MonoBehaviour:
@@ -140,7 +140,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 0
       m_CornerMode: 1
-  m_SpriteShape: {fileID: 11400000, guid: 58202f7d3d075f846908987f4969f40d, type: 2}
+  m_SpriteShape: {fileID: 11400000, guid: ac0bb9eaaac3cbe4a9012fab415b1bae, type: 2}
   m_FillPixelPerUnit: 100
   m_StretchTiling: 1
   m_SplineDetail: 16
@@ -157,11 +157,11 @@ MonoBehaviour:
   m_Creator: {fileID: 0}
   m_Modifiers: []
   m_ColliderSegment:
-  - {x: -0.99950016, y: -0.99950004}
-  - {x: -0.99950004, y: 0.99950016}
-  - {x: 0.99950016, y: 0.99950004}
-  - {x: 0.99950004, y: -0.99950016}
-  - {x: -0.99950016, y: -0.99950004}
+  - {x: -1, y: -1}
+  - {x: -1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: -1}
+  - {x: -1, y: -1}
 --- !u!68 &56427099041604527
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -197,11 +197,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.99950016, y: -0.99950004}
-  - {x: -0.99950004, y: 0.99950016}
-  - {x: 0.99950016, y: 0.99950004}
-  - {x: 0.99950004, y: -0.99950016}
-  - {x: -0.99950016, y: -0.99950004}
+  - {x: -1, y: -1}
+  - {x: -1, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: -1}
+  - {x: -1, y: -1}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
