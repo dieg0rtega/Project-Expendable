@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4805234258459772430}
   - component: {fileID: 1248389607804413736}
   - component: {fileID: 6093856457552674435}
-  - component: {fileID: 4583772996519572908}
+  - component: {fileID: 766006852113183511}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -355,7 +355,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!61 &4583772996519572908
+--- !u!61 &766006852113183511
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -387,7 +387,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0413661, y: -1.3444252}
+  m_Offset: {x: -0.047701597, y: -1.319515}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -398,5 +398,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8909962, y: 1.1311498}
+  m_Size: {x: 1.6848295, y: 1.1809697}
   m_EdgeRadius: 0

@@ -61,7 +61,22 @@ public class PlayerMovement : MonoBehaviour
 
     private float _time;
 
-
+    private bool _feetGrounded;
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (((1 << col.gameObject.layer) & _stats.GroundLayer) != 0)
+            _feetGrounded = true;
+    }
+    private void OnTriggerStay2D(Collider2D col)
+    {
+        if (((1 << col.gameObject.layer) & _stats.GroundLayer) != 0)
+            _feetGrounded = true;
+    }
+    private void OnTriggerExit2D(Collider2D col)
+    {
+        if (((1 << col.gameObject.layer) & _stats.GroundLayer) != 0)
+            _feetGrounded = false;
+    }
 
     void Start()
     {
@@ -136,6 +151,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
+
     private void FixedUpdate()
     {
         CheckCollisions();
@@ -147,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
         ApplyMovement();
 
         Animator.SetFloat("xVelocity", Math.Abs(_rb.velocity.x));
-        Animator.SetFloat("yVelocity", _rb.velocity.y);
+        Animator.SetFloat("yVelocity", _feetGrounded ? 0f : _rb.velocity.y);
         Animator.SetBool("IsHooked", _isHooked);
         Animator.SetFloat("ClimbSpeed", _frameInput.Move.y);
     }
@@ -233,7 +249,7 @@ public class PlayerMovement : MonoBehaviour
 
         Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
 
-        Animator.SetBool("IsGrounded", _grounded);
+        Animator.SetBool("IsGrounded", _feetGrounded);
 
 
 
@@ -417,22 +433,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (_isHooked)
         {
-            if (IsAtLedge(out Vector2 ledgeDir) && _frameVelocity.y > 0 && _frameInput.Move.y > 0 && !_isLedgeBoosting)
-            {
-                _isLedgeBoosting = true;
-                _frameVelocity.y = _stats.JumpPower * 0.6f;
-                _frameVelocity.x = ledgeDir.x * _stats.MaxSpeed;
-            }
-
-            if (_isLedgeBoosting)
-            {
-                if (!IsNextToWall(out _, out _))
-                {
-                    _isHooked = false;
-                    _isLedgeBoosting = false;
-                }
-                return;
-            }
 
             if (_isSnapping)
             {
@@ -470,32 +470,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsAtLedge(out Vector2 wallDir)
-    {
-        LayerMask hookMask = _stats.GroundLayer;
-        Vector2 bottom = new Vector2(_col.bounds.center.x, _col.bounds.min.y + 0.3f);
-        RaycastHit2D bottomRight = Physics2D.Raycast(bottom, Vector2.right, _hookRange, hookMask);
-        RaycastHit2D bottomLeft = Physics2D.Raycast(bottom, Vector2.left, _hookRange, hookMask);
-
-        Vector2 top = new Vector2(_col.bounds.center.x, _col.bounds.max.y + 0.05f);
-        RaycastHit2D topRight = Physics2D.Raycast(top, Vector2.right, _hookRange, hookMask);
-        RaycastHit2D topLeft = Physics2D.Raycast(top, Vector2.left, _hookRange, hookMask);
-
-        if (bottomRight.collider != null && topRight.collider == null)
-        {
-            wallDir = Vector2.right;
-            return true;
-        }
-        if (bottomLeft.collider != null && topLeft.collider == null)
-        {
-            wallDir = Vector2.left;
-            return true;
-        }
-
-        wallDir = default;
-        return false;
-
-    }
+    
 
     private bool IsNextToWall(out RaycastHit2D hit, out Vector2 wallDir)
     {
