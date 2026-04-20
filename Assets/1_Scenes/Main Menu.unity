@@ -1712,11 +1712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 290cd0a06139c48eba44f0b37a1f8c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuPanel: {fileID: 0}
-  optionsMenuPanel: {fileID: 0}
-  messagePanel: {fileID: 0}
-  attributionPanel: {fileID: 0}
-  fullscreenToggle: {fileID: 0}
+  mainMenuPanel: {fileID: 1869177025}
+  optionsMenuPanel: {fileID: 1448670690}
+  messagePanel: {fileID: 1898602084}
+  attributionPanel: {fileID: 143422493}
+  fullscreenToggle: {fileID: 2021018740}
 --- !u!1 &940602353
 GameObject:
   m_ObjectHideFlags: 0
@@ -4034,9 +4034,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 155573872}
     - target: {fileID: 6221882500578117930, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221882500578117930, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 155573872}
+    - target: {fileID: 6221882500578117930, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleFullscreen
+      objectReference: {fileID: 0}
     - target: {fileID: 7365388796260145604, guid: a49bdbd62b14c40808d97107470880c0, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5

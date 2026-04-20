@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -33,7 +34,13 @@ public class MainMenu : MonoBehaviour
 
    public void ToggleFullscreen(bool isFullscreen)
    {
-      Screen.fullScreen = isFullscreen;
+        if (isFullscreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        } else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+        }
    }
 
    public void ToggleMessage()
