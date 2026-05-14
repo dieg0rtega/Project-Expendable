@@ -16,6 +16,7 @@ public class LasherEnemyScript : MonoBehaviour
     [SerializeField] private Vector2 _facingDirection = Vector2.right;
     [SerializeField] private float _detectionAngle = 20f;
 
+    private Animator _hitboxAnimator;
     private float _playerSeenTimer = 0f;
     private bool _isAttacking = false;
     private GameObject _player;
@@ -38,6 +39,8 @@ public class LasherEnemyScript : MonoBehaviour
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
         _hitboxCollider = _hitbox.GetComponent<BoxCollider2D>();
         _hitboxRenderer = _TileMesh.GetComponent<SpriteRenderer>();
+        _hitboxAnimator = _TileMesh.GetComponent<Animator>();
+        _hitboxAnimator.enabled = false;
 
     }
 
@@ -92,6 +95,8 @@ public class LasherEnemyScript : MonoBehaviour
     private IEnumerator TentacleAttack()
     {
         _isAttacking = true;
+        _hitboxAnimator.enabled = true;
+        _hitboxAnimator.SetTrigger("Attack");
 
         Vector2 worldDir = (_player.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(worldDir.y, worldDir.x) * Mathf.Rad2Deg;
