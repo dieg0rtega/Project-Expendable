@@ -29,8 +29,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Pickaxe Hook")]
     [SerializeField] private float _hookRange = 1.5f;
-    [SerializeField] private float _hookBoost = 12f;
-    [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
     [SerializeField] private float _climbSoundInterval = 0.25f;
@@ -479,8 +477,15 @@ public class PlayerMovement : MonoBehaviour
             if (_frameInput.JumpDown || _jumpToConsume)
             {
                 _isHooked = false;
-                _frameVelocity.y = _stats.JumpPower * 2;
-                _jumpToConsume = true;
+                _isSnapping = false;
+
+                _frameVelocity.y = _stats.JumpPower * 1.2f;
+
+                _jumpToConsume = false;
+                _bufferedJumpUsable = false;
+                _coyoteUsable = false;
+                _endedJumpEarly = false;
+                _grounded = false;
                 return;
             }
 

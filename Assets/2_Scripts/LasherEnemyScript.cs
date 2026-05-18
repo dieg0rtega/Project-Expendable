@@ -33,7 +33,7 @@ public class LasherEnemyScript : MonoBehaviour
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
@@ -120,6 +120,8 @@ public class LasherEnemyScript : MonoBehaviour
         yield return new WaitForSeconds(_holdDuration);
 
         // Retract
+        _hitboxAnimator.SetTrigger("Retract");
+
         elapsed = 0f;
         duration = _maxExtendDistance / _retractSpeed;
         while (elapsed < duration)
