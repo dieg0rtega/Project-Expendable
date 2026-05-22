@@ -17,47 +17,47 @@ MonoBehaviour:
     m_End: 45
     m_Order: 0
     m_Sprites:
-    - {fileID: 21300000, guid: d5357b11ec3d3cc49a9bad59b7fc5b6e, type: 3}
+    - {fileID: 21300000, guid: c3e70109f53f4a732a5139f9e73f973b, type: 3}
   - m_Start: 45
     m_End: 135
     m_Order: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 859ed2a16c30e4349977648c9090429d, type: 3}
+    - {fileID: 21300000, guid: 429926cb272d0123e816d2989fd40fcf, type: 3}
   - m_Start: -135
     m_End: -45
     m_Order: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 3326bdd34d8391546a8d059e5a205cf6, type: 3}
+    - {fileID: 21300000, guid: f69d4e710671dd7fdb2ff83b517798d4, type: 3}
   - m_Start: 135
     m_End: 225
     m_Order: 0
     m_Sprites:
-    - {fileID: 21300000, guid: 24f8a911e85fe3442a1c164f55386bdf, type: 3}
+    - {fileID: 21300000, guid: e3623e38e9fe2f54c967c837fca0dab1, type: 3}
   m_FillTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_CornerSprites:
   - m_CornerType: 0
     m_Sprites:
-    - {fileID: 21300000, guid: dd95fe59a91286447895f0d89244b3a2, type: 3}
+    - {fileID: 0}
   - m_CornerType: 1
     m_Sprites:
-    - {fileID: 21300000, guid: 5f4a8b249cf66ed4b9569e19d3c3d182, type: 3}
+    - {fileID: 0}
   - m_CornerType: 2
     m_Sprites:
-    - {fileID: 21300000, guid: f126044f41f5d3e409d0a20ea66199c5, type: 3}
+    - {fileID: 0}
   - m_CornerType: 3
     m_Sprites:
-    - {fileID: 21300000, guid: 96da8f7fa00ce774eb6897e00fe45aa3, type: 3}
+    - {fileID: 0}
   - m_CornerType: 4
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 5
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 6
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   - m_CornerType: 7
     m_Sprites:
-    - {fileID: 21300000, guid: d98284f2e770f7c4b8f53f2a311d58c4, type: 3}
+    - {fileID: 0}
   m_FillOffset: 0
   m_UseSpriteBorders: 1
