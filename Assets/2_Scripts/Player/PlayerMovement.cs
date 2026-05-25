@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
-            HookDown = Input.GetMouseButton(0),
+            HookDown = Input.GetKey(KeyCode.K),
         };
         
         if (_stats.SnapInput)
