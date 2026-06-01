@@ -96,6 +96,7 @@ public class LasherEnemyScript : MonoBehaviour
     {
         _isAttacking = true;
         _hitboxAnimator.enabled = true;
+        _hitboxAnimator.SetFloat("AttackSpeed", _extendSpeed);
         _hitboxAnimator.SetTrigger("Attack");
 
         Vector2 worldDir = (_player.transform.position - transform.position).normalized;
@@ -120,7 +121,9 @@ public class LasherEnemyScript : MonoBehaviour
         yield return new WaitForSeconds(_holdDuration);
 
         // Retract
+        _hitboxAnimator.SetFloat("RetractSpeed", _retractSpeed);
         _hitboxAnimator.SetTrigger("Retract");
+
 
         elapsed = 0f;
         duration = _maxExtendDistance / _retractSpeed;
@@ -143,6 +146,8 @@ public class LasherEnemyScript : MonoBehaviour
         _hitboxCollider.size = new Vector2(0f, _hitboxCollider.size.y);
         _hitboxCollider.offset = Vector2.zero;
         _isAttacking = false;
+        _hitboxAnimator.SetFloat("RetractSpeed", 0);
+        _hitboxAnimator.SetFloat("AttackSpeed", 0);
     }
 
     private bool CanSeePlayer()
