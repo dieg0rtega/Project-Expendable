@@ -63,4 +63,11 @@ public class OptionsSubScript : MonoBehaviour
 
     }
 
+    public void SetQuality (float qualityIndex)
+
+    {
+        int index = Mathf.RoundToInt(qualityIndex);
+        QualitySettings.SetQualityLevel(index);
+    }
+
 }
