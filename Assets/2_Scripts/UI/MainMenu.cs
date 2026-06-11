@@ -32,16 +32,6 @@ public class MainMenu : MonoBehaviour
 
    }
 
-   public void ToggleFullscreen(bool isFullscreen)
-   {
-        if (isFullscreen)
-        {
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-        } else
-        {
-            Screen.fullScreenMode = FullScreenMode.Windowed;
-        }
-   }
 
    public void ToggleMessage()
    {

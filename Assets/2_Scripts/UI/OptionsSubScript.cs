@@ -62,6 +62,16 @@ public class OptionsSubScript : MonoBehaviour
         SetMasterVolume();
 
     }
+    public void ToggleFullscreen(bool isFullscreen)
+   {
+        if (isFullscreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        } else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+        }
+   }
 
     public void SetQuality (float qualityIndex)
 
