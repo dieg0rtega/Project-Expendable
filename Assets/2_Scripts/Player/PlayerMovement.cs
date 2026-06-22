@@ -21,6 +21,13 @@ public class PlayerMovement : MonoBehaviour
     private bool _facingRight = true;
     private float _lastGroundedTime; //landing cooldown buffer
 
+    [Header("Grapple")]
+    [SerializeField] private float _grappleSpeed = 10f;
+    [SerializeField] private LayerMask _grappleLayer;
+
+    private GrapplePoint _nearestGrapplePoint;
+    private bool _isGrappling;
+
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
     [SerializeField] private int _arcResolution = 30;
@@ -601,6 +608,50 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
+    private void FindNearestGrapplePoint()
+    {
+        GrapplePoint[] points = FindObjectsOfType<GrapplePoint>();
+        _nearestGrapplePoint = null;
+        float closest = float.MaxValue;
+
+        foreach (GrapplePoint point in points)
+        {
+            float dist = Vector2.Distance(transform.position, point.transform.position);
+            if (dist < closest && point.IsPlayerInRange(transform.position))
+            {
+                closest = dist;
+                _nearestGrapplePoint = point;
+            }
+        }
+    }
+
+    private void HandleGrapple()
+    {
+        FindNearestGrapplePoint();
+
+        if (Input.GetMouseButtonDown(1) && _nearestGrapplePoint != null && !_isGrappling)
+        {
+            _isGrappling = true;
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            _isGrappling = false;
+        }
+
+        if (_isGrappling && _nearestGrapplePoint != null)
+        {
+            Vector2 directionToPoint = ((Vector2)_nearestGrapplePoint.transform.position - (Vector2)transform.position).normalized;
+
+            if (Vector2.Distance(transform.position, _nearestGrapplePoint.transform.position) < 0.2f)
+            {
+                _isGrappling = false;
+                return;
+            }
+
+            _frameVelocity = directionToPoint * _grappleSpeed;
+        }
+    }
 
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
