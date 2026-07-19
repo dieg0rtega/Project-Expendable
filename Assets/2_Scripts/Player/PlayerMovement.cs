@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _grappleSpeed = 10f;
     [SerializeField] private LayerMask _grappleLayer;
 
+    private bool _grappleToConsume;
     private GrapplePoint _nearestGrapplePoint;
     private bool _isGrappling;
 
@@ -134,8 +135,15 @@ public class PlayerMovement : MonoBehaviour
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
             HookDown = Input.GetKey(KeyCode.K),
+            GrappleDown = Input.GetMouseButtonDown(1),
+            GrappleHeld = Input.GetMouseButton(1),
         };
-        
+
+        if (_frameInput.GrappleDown)
+        {
+            _grappleToConsume = true;
+        }
+
         if (_stats.SnapInput)
         {
             _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
@@ -157,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         HandleDirection();
         HandleGravity();
+        HandleGrapple();
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
@@ -629,12 +638,13 @@ public class PlayerMovement : MonoBehaviour
     {
         FindNearestGrapplePoint();
 
-        if (Input.GetMouseButtonDown(1) && _nearestGrapplePoint != null && !_isGrappling)
+        if (_grappleToConsume && _nearestGrapplePoint != null && !_isGrappling)
         {
             _isGrappling = true;
         }
+        _grappleToConsume = false;
 
-        if (Input.GetMouseButtonUp(1))
+        if (!_frameInput.GrappleHeld)
         {
             _isGrappling = false;
         }
@@ -752,6 +762,8 @@ public struct FrameInput
     public bool JumpHeld;
     public Vector2 Move;
     public bool HookDown;
+    public bool GrappleDown;
+    public bool GrappleHeld;
 }
 
 public interface IPlayerController
