@@ -299,9 +299,9 @@ MonoBehaviour:
   _visionRange: 10
   _attackDelay: 0.2
   _extendSpeed: 50
-  _retractSpeed: 5
+  _retractSpeed: 20
   _maxExtendDistance: 10
-  _holdDuration: 3
+  _holdDuration: 0.5
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64

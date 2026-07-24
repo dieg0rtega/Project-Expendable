@@ -11,20 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22bb9e8d-e0bf-480d-a805-73d6b94191ee" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/1_Scenes/Level2.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1_Scenes/Level2.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/3_Prefabs/IcePool.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/3_Prefabs/IcePool.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame2.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame3.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame4.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame5.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame5.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Frame5.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Underwater.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Underwater.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Underwater.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/4_Sprites/Hazards &amp; Obstacles/Ice_Pool_Underwater.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/7_Materials/Sprite Shape Profiles/IcePoolProfile.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/7_Materials/Sprite Shape Profiles/IcePoolProfile.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Expendable/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Expendable/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1_Scenes/Level3.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1_Scenes/Level3.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/2_Scripts/Player/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/2_Scripts/Player/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/3_Prefabs/Slippery Ice.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/3_Prefabs/Slippery Ice.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/7_Materials/IceFriction.physicsMaterial2D" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/7_Materials/IceFriction.physicsMaterial2D" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,39 +29,41 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/2_Scripts/CameraFollow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/2_Scripts/Player/PlayerMovement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@9.1.0/Runtime/SpriteShapeController.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="3G9TOGUxBTEY27GkJBzuCUyxF08" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity Attach To: Attach to": "Unity Editor",
-    "DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider": "Unity Editor",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "Unity Attach To.Attach to.executor": "Debug",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Level2",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Device#class com.jetbrains.rider.plugins.unity.run.devices.UnityEditorDeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider#Unity Attach To: Attach to&quot;: &quot;Unity Editor&quot;,
+    &quot;DeviceKind#com.jetbrains.rider.plugins.unity.run.devices.UnityDevicesProvider&quot;: &quot;Unity Editor&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;Unity Attach To.Attach to.executor&quot;: &quot;Debug&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Level-3&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Attach to" type="UnityDevicePlayer" factoryName="UnityAttachToDevicePlayer">
       <method v="2" />
@@ -84,6 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1783382752724</updated>
       <workItem from="1783382760109" duration="1584000" />
+      <workItem from="1784757401766" duration="3064000" />
     </task>
     <servers />
   </component>
