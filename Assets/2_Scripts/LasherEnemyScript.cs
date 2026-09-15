@@ -16,6 +16,7 @@ public class LasherEnemyScript : MonoBehaviour
     [SerializeField] private Vector2 _facingDirection = Vector2.right;
     [SerializeField] private float _detectionAngle = 20f;
 
+    private Animator _hitboxAnimator;
     private float _playerSeenTimer = 0f;
     private bool _isAttacking = false;
     private GameObject _player;
@@ -32,12 +33,14 @@ public class LasherEnemyScript : MonoBehaviour
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player");
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         _hitboxOriginalWorldPos = _hitbox.transform.position;
         _hitboxOriginalLocalPos = _hitbox.transform.localPosition;
         _hitboxOriginalLocalScale = _hitbox.transform.localScale;
         _hitboxCollider = _hitbox.GetComponent<BoxCollider2D>();
         _hitboxRenderer = _TileMesh.GetComponent<SpriteRenderer>();
+        _hitboxAnimator = _TileMesh.GetComponent<Animator>();
+        _hitboxAnimator.enabled = false;
 
     }
 
@@ -92,6 +95,9 @@ public class LasherEnemyScript : MonoBehaviour
     private IEnumerator TentacleAttack()
     {
         _isAttacking = true;
+        _hitboxAnimator.enabled = true;
+        _hitboxAnimator.SetFloat("AttackSpeed", _extendSpeed/50);
+        _hitboxAnimator.SetTrigger("Attack");
 
         Vector2 worldDir = (_player.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(worldDir.y, worldDir.x) * Mathf.Rad2Deg;
@@ -115,6 +121,10 @@ public class LasherEnemyScript : MonoBehaviour
         yield return new WaitForSeconds(_holdDuration);
 
         // Retract
+        _hitboxAnimator.SetFloat("RetractSpeed", _retractSpeed/25);
+        _hitboxAnimator.SetTrigger("Retract");
+
+
         elapsed = 0f;
         duration = _maxExtendDistance / _retractSpeed;
         while (elapsed < duration)

@@ -18,7 +18,7 @@ public class PlayerRespawn : MonoBehaviour
     {
         _controller = GetComponent<PlayerMovement>();
         _rb = GetComponent<Rigidbody2D>();
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        //audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

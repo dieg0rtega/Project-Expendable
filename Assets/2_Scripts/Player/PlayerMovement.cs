@@ -21,6 +21,14 @@ public class PlayerMovement : MonoBehaviour
     private bool _facingRight = true;
     private float _lastGroundedTime; //landing cooldown buffer
 
+    [Header("Grapple")]
+    [SerializeField] private float _grappleSpeed = 10f;
+    [SerializeField] private LayerMask _grappleLayer;
+
+    private bool _grappleToConsume;
+    private GrapplePoint _nearestGrapplePoint;
+    private bool _isGrappling;
+
     [Header("Jump Arc Visualization")]
     [SerializeField] private bool _drawJumpArc = true;
     [SerializeField] private int _arcResolution = 30;
@@ -29,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Pickaxe Hook")]
     [SerializeField] private float _hookRange = 1.5f;
-    [SerializeField] private float _hookBoost = 12f;
-    [SerializeField] private float _ledgeClearHeight = 0.6f;
     [SerializeField] private float _hookCooldown = 0.5f;
     [SerializeField] private float _snapSpeed = 15f;
     [SerializeField] private float _climbSoundInterval = 0.25f;
@@ -128,9 +134,16 @@ public class PlayerMovement : MonoBehaviour
             JumpDown = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C),
             JumpHeld = Input.GetButton("Jump") || Input.GetKey(KeyCode.C),
             Move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")),
-            HookDown = Input.GetMouseButton(0),
+            HookDown = Input.GetKey(KeyCode.K),
+            GrappleDown = Input.GetMouseButtonDown(1),
+            GrappleHeld = Input.GetMouseButton(1),
         };
-        
+
+        if (_frameInput.GrappleDown)
+        {
+            _grappleToConsume = true;
+        }
+
         if (_stats.SnapInput)
         {
             _frameInput.Move.x = Mathf.Abs(_frameInput.Move.x) < _stats.HorizontalDeadZoneThreshold ? 0 : Mathf.Sign(_frameInput.Move.x);
@@ -152,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         HandleDirection();
         HandleGravity();
+        HandleGrapple();
         HandlePickaxeHook();
         HandleJump();
         ApplyMovement();
@@ -479,8 +493,15 @@ public class PlayerMovement : MonoBehaviour
             if (_frameInput.JumpDown || _jumpToConsume)
             {
                 _isHooked = false;
-                _frameVelocity.y = _stats.JumpPower * 2;
-                _jumpToConsume = true;
+                _isSnapping = false;
+
+                _frameVelocity.y = _stats.JumpPower * 1.2f;
+
+                _jumpToConsume = false;
+                _bufferedJumpUsable = false;
+                _coyoteUsable = false;
+                _endedJumpEarly = false;
+                _grounded = false;
                 return;
             }
 
@@ -596,6 +617,51 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
+    private void FindNearestGrapplePoint()
+    {
+        GrapplePoint[] points = FindObjectsOfType<GrapplePoint>();
+        _nearestGrapplePoint = null;
+        float closest = float.MaxValue;
+
+        foreach (GrapplePoint point in points)
+        {
+            float dist = Vector2.Distance(transform.position, point.transform.position);
+            if (dist < closest && point.IsPlayerInRange(transform.position))
+            {
+                closest = dist;
+                _nearestGrapplePoint = point;
+            }
+        }
+    }
+
+    private void HandleGrapple()
+    {
+        FindNearestGrapplePoint();
+
+        if (_grappleToConsume && _nearestGrapplePoint != null && !_isGrappling)
+        {
+            _isGrappling = true;
+        }
+        _grappleToConsume = false;
+
+        if (!_frameInput.GrappleHeld)
+        {
+            _isGrappling = false;
+        }
+
+        if (_isGrappling && _nearestGrapplePoint != null)
+        {
+            Vector2 directionToPoint = ((Vector2)_nearestGrapplePoint.transform.position - (Vector2)transform.position).normalized;
+
+            if (Vector2.Distance(transform.position, _nearestGrapplePoint.transform.position) < 0.2f)
+            {
+                _isGrappling = false;
+                return;
+            }
+
+            _frameVelocity = directionToPoint * _grappleSpeed;
+        }
+    }
 
     private void ApplyMovement() => _rb.velocity = _frameVelocity;
 
@@ -696,6 +762,8 @@ public struct FrameInput
     public bool JumpHeld;
     public Vector2 Move;
     public bool HookDown;
+    public bool GrappleDown;
+    public bool GrappleHeld;
 }
 
 public interface IPlayerController
