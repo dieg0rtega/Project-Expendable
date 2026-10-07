@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b2c79acb259e3e540a9030708d0b7015
+guid: 79b5ae98bbb161d41a89e9e18a517d10
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,148 +123,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_0
+      name: Mars_Death_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 2035.3333
-        width: 977.6667
-        height: 1017.6667
+        y: 1536.5
+        width: 2048.5
+        height: 1536.5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0efe9763d64cffb45b9f68e573f79465
-      internalID: 1363811291
+      spriteID: 723ad72c8558f6347b6641b5e1635839
+      internalID: -1664919506
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_1
+      name: Mars_Death_spritesheet_2
       rect:
         serializedVersion: 2
-        x: 977
-        y: 2035.3333
-        width: 977.6667
-        height: 1017.6667
+        x: 2048
+        y: 1536.5
+        width: 2048.5
+        height: 1536.5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d1b6555f0739ea4983015fcc91c0dad
-      internalID: 1819920408
+      spriteID: d12cd311b91644a4b8f019fa29fee75c
+      internalID: -2118056017
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_2
-      rect:
-        serializedVersion: 2
-        x: 1954
-        y: 2035.3333
-        width: 977.6667
-        height: 1017.6667
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99e63822493001e4e8479f9cada129bb
-      internalID: 18598189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_3
+      name: Mars_Death_spritesheet_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 1018
-        width: 978
-        height: 1018
+        y: 0.5
+        width: 2048.5
+        height: 1536.5
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd90dd0086afb654f813420b068bbd09
-      internalID: -276780534
+      spriteID: a63e5aa565c8a4f40bb54669b2c96e39
+      internalID: -349899985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_4
+      name: Mars_Death_spritesheet_3
       rect:
         serializedVersion: 2
-        x: 977
-        y: 1018.3333
-        width: 977.6667
-        height: 1017.6667
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ff0230f679c1c3c41aba72fbb046a39a
-      internalID: 208161082
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_5
-      rect:
-        serializedVersion: 2
-        x: 1954
-        y: 1018.3333
-        width: 977.6667
-        height: 1017.6667
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dd79c98ce77ba4b479e4e7d5c0f8c2df
-      internalID: 43389328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mars_centered_jump_spritesheet_6
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 2048
         y: 0
-        width: 978
-        height: 1018
+        width: 2048
+        height: 1536
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a4f938e238555344824418e40bbf952
-      internalID: 1615815692
+      spriteID: 0176a828a4719be46aaf7031b4943b4b
+      internalID: 1274782383
       vertices: []
       indices: 
       edges: []
@@ -280,13 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Mars_centered_jump_spritesheet_0: 1363811291
-      Mars_centered_jump_spritesheet_1: 1819920408
-      Mars_centered_jump_spritesheet_2: 18598189
-      Mars_centered_jump_spritesheet_3: -276780534
-      Mars_centered_jump_spritesheet_4: 208161082
-      Mars_centered_jump_spritesheet_5: 43389328
-      Mars_centered_jump_spritesheet_6: 1615815692
+      Mars_Death_spritesheet_0: -1664919506
+      Mars_Death_spritesheet_1: -349899985
+      Mars_Death_spritesheet_2: -2118056017
+      Mars_Death_spritesheet_3: 1274782383
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

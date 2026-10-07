@@ -6338,6 +6338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelOverlayCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3662216792205597592, guid: 127b2b44fc56744d08455da1bedae79b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 27.542969
+      objectReference: {fileID: 0}
     - target: {fileID: 5958531104732570110, guid: 127b2b44fc56744d08455da1bedae79b, type: 3}
       propertyPath: m_Pivot.x
       value: 0

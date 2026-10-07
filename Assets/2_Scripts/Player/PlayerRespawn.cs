@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private Vector2 _respawnPoint = Vector2.zero;
     [SerializeField] private float _respawnDelay = 10f;
 
+    private Animator _animator;
+    private SpriteRenderer _renderer;
     private PlayerMovement _controller;
     private Rigidbody2D _rb;
     private bool _isDead;
@@ -16,9 +19,11 @@ public class PlayerRespawn : MonoBehaviour
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
+        _renderer =  GetComponent<SpriteRenderer>();
         _controller = GetComponent<PlayerMovement>();
         _rb = GetComponent<Rigidbody2D>();
-        //audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -62,20 +67,18 @@ public class PlayerRespawn : MonoBehaviour
         _isDead = true;
 
         _rb.velocity = Vector2.zero;
+        _rb.gravityScale = 0;
         _controller.enabled = false;
-
         
-        GetComponent<SpriteRenderer>().enabled = false;
+        _animator.SetBool("IsDead", _isDead);
 
         yield return new WaitForSeconds(_respawnDelay);
-
-        transform.position = _respawnPoint;
-        _rb.velocity = Vector2.zero;
-        _controller.enabled = true;
-
+        
+        _renderer.enabled = false;
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GetComponent<SpriteRenderer>().enabled = true;
-
+        transform.position = _respawnPoint;
+        
         _isDead = false;
     }
 }
